@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SUBI PH Cash Flow Tracker</title>
+  <meta name="theme-color" content="#1e3a8a" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -13,11 +14,36 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --cf-primary: #1e3a8a;
+      --cf-accent: #3b82f6;
+      --cf-soft: #eff6ff;
+      --cf-soft-2: #dbeafe;
+      --cf-border: #bfdbfe;
+      --cf-text: #0f172a;
+      --cf-muted: #64748b;
+      --cf-bg: #f4f8fb;
+      --cf-card: rgba(255,255,255,0.96);
+      --income: #16a34a;
+      --expense: #dc2626;
+      --savings: #2563eb;
+      --support: #d97706;
+      --shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background: #f4f8f3;
+      background: var(--cf-bg);
       color: #1f2937;
       padding: 16px;
+      line-height: 1.5;
     }
 
     .container {
@@ -26,87 +52,89 @@
     }
 
     .brand-header {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  background: linear-gradient(135deg, #eff6ff, #dbeafe);
-  border: 2px solid #bfdbfe;
-  border-radius: 26px;
-  padding: 22px 24px;
-  margin-bottom: 18px;
-  box-shadow: 0 10px 25px rgba(30, 58, 138, 0.10);
-}
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: linear-gradient(135deg, var(--cf-soft), var(--cf-soft-2));
+      border: 1.5px solid var(--cf-border);
+      border-radius: 26px;
+      padding: 18px 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 25px rgba(30, 58, 138, 0.10);
+    }
 
     .icon-box {
-  width: 98px;
-  height: 98px;
-  min-width: 98px;
-  background: #ffffff;
-  border-radius: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
-}
+      width: 96px;
+      height: 96px;
+      min-width: 96px;
+      background: #ffffff;
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    }
 
     .brand-logo {
       width: 100%;
       height: 100%;
       object-fit: contain;
+      display: block;
     }
 
     .brand-text {
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
 
     .brand-text h1 {
-  margin: 0;
-  font-size: 48px;
-  line-height: 1;
-  font-weight: 800;
-  color: var(--cf-primary);
-  letter-spacing: 1px;
-}
+      margin: 0 0 8px;
+      font-size: 44px;
+      line-height: 1;
+      font-weight: 800;
+      color: var(--cf-text);
+      letter-spacing: 1px;
+    }
 
     .subline {
-  margin: 10px 0 6px;
-  font-size: 18px;
-  letter-spacing: 5px;
-  color: #334155;
-}
+      margin: 0 0 6px;
+      font-size: 16px;
+      letter-spacing: 4px;
+      color: #334155;
+    }
 
     .tagline {
-  margin: 0;
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  color: var(--cf-accent);
-}
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--cf-primary);
+    }
 
     .card,
     .section {
-      background: rgba(255,255,255,0.94);
+      background: var(--cf-card);
       border: 1px solid #e5e7eb;
-      border-radius: 14px;
+      border-radius: var(--radius-md);
       padding: 16px;
       margin-bottom: 14px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+      box-shadow: var(--shadow);
     }
 
     .card h2,
     .section h2 {
-      font-size: 18px;
+      font-size: 20px;
       margin-bottom: 12px;
-      color: #166534;
+      color: var(--cf-primary);
     }
 
     .info-card {
-      background: #f8fafc;
+      background: #f8fbff;
       border-radius: 14px;
       padding: 14px;
-      border: 1px solid #edf2f7;
+      border: 1px solid #e6eefc;
     }
 
     .muted {
@@ -121,7 +149,7 @@
     }
 
     .highlight {
-      color: #166534;
+      color: var(--cf-primary);
       font-weight: 700;
     }
 
@@ -147,10 +175,27 @@
     }
 
     .value {
-      font-size: 24px;
-      font-weight: 700;
-      color: #166534;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--cf-text);
       word-break: break-word;
+      line-height: 1.15;
+    }
+
+    .value.income-color {
+      color: var(--income);
+    }
+
+    .value.expense-color {
+      color: var(--expense);
+    }
+
+    .value.balance-color {
+      color: var(--cf-primary);
+    }
+
+    .value.savings-color {
+      color: var(--savings);
     }
 
     .form-grid {
@@ -179,12 +224,12 @@
 
     input:focus,
     select:focus {
-      border-color: #2e7d32;
-      box-shadow: 0 0 0 3px rgba(46,125,50,0.12);
+      border-color: var(--cf-accent);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.14);
     }
 
     button {
-      background: #2e7d32;
+      background: var(--cf-primary);
       color: white;
       font-weight: 700;
       border: none;
@@ -193,7 +238,7 @@
     }
 
     button:hover {
-      background: #256428;
+      background: var(--cf-accent);
     }
 
     .secondary-btn {
@@ -226,7 +271,7 @@
     }
 
     thead {
-      background: #e8f5e9;
+      background: #eff6ff;
     }
 
     th,
@@ -238,7 +283,7 @@
     }
 
     th {
-      color: #166534;
+      color: var(--cf-primary);
       font-weight: 700;
     }
 
@@ -247,12 +292,12 @@
     }
 
     .type-income {
-      color: #166534;
+      color: var(--income);
       font-weight: 700;
     }
 
     .type-expense {
-      color: #b91c1c;
+      color: var(--expense);
       font-weight: 700;
     }
 
@@ -272,6 +317,7 @@
       position: relative;
       width: 100%;
       height: 460px;
+      margin-top: 8px;
     }
 
     .summary-list {
@@ -282,8 +328,8 @@
     }
 
     .summary-item {
-      background: #f8fafc;
-      border: 1px solid #edf2f7;
+      background: #f8fbff;
+      border: 1px solid #e6eefc;
       border-radius: 12px;
       padding: 10px 12px;
       font-size: 13px;
@@ -291,7 +337,7 @@
     }
 
     .summary-item strong {
-      color: #166534;
+      color: var(--cf-primary);
     }
 
     .empty-note {
@@ -320,16 +366,33 @@
       }
 
       .brand-header {
-        flex-direction: column;
-        text-align: center;
+        gap: 12px;
+        padding: 14px;
+        border-radius: 20px;
       }
 
-      .brand-text {
-        align-items: center;
+      .icon-box {
+        width: 74px;
+        height: 74px;
+        min-width: 74px;
+        border-radius: 18px;
+        padding: 8px;
       }
 
       .brand-text h1 {
-        font-size: 26px;
+        font-size: 28px;
+        margin-bottom: 4px;
+      }
+
+      .subline {
+        font-size: 11px;
+        letter-spacing: 2px;
+        margin-bottom: 4px;
+      }
+
+      .tagline {
+        font-size: 10px;
+        letter-spacing: 1.8px;
       }
 
       .dashboard,
@@ -341,22 +404,31 @@
       }
 
       .chart-box {
-        height: 560px;
+        height: 520px;
       }
 
       .value {
-        font-size: 20px;
+        font-size: 22px;
+      }
+
+      .card h2,
+      .section h2 {
+        font-size: 18px;
       }
     }
 
     @media (max-width: 480px) {
+      .brand-header {
+        align-items: center;
+      }
+
       .brand-text h1 {
         font-size: 24px;
       }
 
       .subline,
       .tagline {
-        letter-spacing: 1.5px;
+        letter-spacing: 1.4px;
       }
     }
   </style>
@@ -391,22 +463,22 @@
     <div class="dashboard">
       <div class="dash-card">
         <h3>Total Income</h3>
-        <div class="value" id="totalIncome">₱0.00</div>
+        <div class="value income-color" id="totalIncome">₱0.00</div>
       </div>
 
       <div class="dash-card">
         <h3>Total Expenses</h3>
-        <div class="value" id="totalExpenses">₱0.00</div>
+        <div class="value expense-color" id="totalExpenses">₱0.00</div>
       </div>
 
       <div class="dash-card">
         <h3>Remaining Balance</h3>
-        <div class="value" id="balance">₱0.00</div>
+        <div class="value balance-color" id="balance">₱0.00</div>
       </div>
 
       <div class="dash-card">
         <h3>Savings</h3>
-        <div class="value" id="totalSavings">₱0.00</div>
+        <div class="value savings-color" id="totalSavings">₱0.00</div>
       </div>
     </div>
 
@@ -518,7 +590,8 @@
 
     function getRecordMonth(record) {
       if (record.type === "Income") {
-        return String(record.date).slice(0, 7);
+        const firstDate = String(record.date).split(" to ")[0];
+        return firstDate.slice(0, 7);
       }
       return String(record.date).slice(0, 7);
     }
@@ -531,7 +604,6 @@
         const searchable = `${record.date} ${record.type} ${record.category} ${record.amount}`.toLowerCase();
         const matchesSearch = !searchText || searchable.includes(searchText);
         const matchesMonth = !monthValue || getRecordMonth(record) === monthValue;
-
         return matchesSearch && matchesMonth;
       });
     }
