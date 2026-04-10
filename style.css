@@ -4,25 +4,38 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f8fb;
-  color: #0f172a;
-  padding: 16px;
-}
-
-.container {
-  max-width: 1100px;
-  margin: auto;
-}
-
-/* VARIABLES */
 :root {
   --cf-primary: #1e3a8a;
   --cf-accent: #3b82f6;
   --cf-soft: #eff6ff;
+  --cf-soft-2: #dbeafe;
   --cf-border: #bfdbfe;
   --cf-text: #0f172a;
+  --cf-muted: #64748b;
+  --cf-card: #ffffff;
+  --cf-bg: #f4f8fb;
+  --income: #16a34a;
+  --expense: #dc2626;
+  --savings: #2563eb;
+  --support: #d97706;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--cf-bg);
+  color: var(--cf-text);
+  padding: 16px;
+  line-height: 1.5;
+}
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 /* ================= HEADER ================= */
@@ -31,178 +44,277 @@ body {
   display: flex;
   align-items: center;
   gap: 18px;
-  background: linear-gradient(135deg, #eff6ff, #dbeafe);
-  border: 2px solid var(--cf-border);
-  border-radius: 26px;
-  padding: 22px 24px;
+  background: linear-gradient(135deg, var(--cf-soft), var(--cf-soft-2));
+  border: 1.5px solid var(--cf-border);
+  border-radius: 24px;
+  padding: 18px 20px;
   margin-bottom: 18px;
-  box-shadow: 0 10px 25px rgba(30, 58, 138, 0.10);
+  box-shadow: 0 10px 24px rgba(30, 58, 138, 0.08);
 }
 
 .icon-box {
-  width: 95px;
-  height: 95px;
-  min-width: 95px;
+  width: 92px;
+  height: 92px;
+  min-width: 92px;
   background: #ffffff;
   border-radius: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
 }
 
 .brand-logo {
-  width: 70px;
-  height: 70px;
+  width: 68px;
+  height: 68px;
   object-fit: contain;
+  display: block;
+}
+
+.brand-text {
+  flex: 1;
+  min-width: 0;
 }
 
 .brand-text h1 {
-  font-size: 42px;
+  font-size: 40px;
+  line-height: 1;
   font-weight: 800;
-  color: var(--cf-primary);
+  color: var(--cf-text);
+  margin: 0 0 8px;
+  letter-spacing: 0.5px;
 }
 
 .subline {
   font-size: 16px;
   letter-spacing: 4px;
-  margin: 6px 0;
-  color: #475569;
+  margin: 0 0 8px;
+  color: var(--cf-muted);
 }
 
 .tagline {
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 700;
   letter-spacing: 3px;
-  color: var(--cf-accent);
+  color: var(--cf-primary);
+  margin: 0;
 }
 
 /* ================= INTRO ================= */
 
 .intro-card {
-  background: #ffffff;
+  background: var(--cf-card);
   border-radius: 20px;
-  padding: 24px;
-  margin-bottom: 20px;
+  padding: 22px 22px 18px;
+  margin-bottom: 18px;
   border-left: 6px solid var(--cf-primary);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
 }
 
 .intro-card h2 {
   color: var(--cf-primary);
-  margin-bottom: 12px;
+  margin: 0 0 14px;
+  font-size: 28px;
 }
 
 .intro-card p {
-  color: #374151;
-  margin-bottom: 10px;
-  line-height: 1.6;
+  color: #334155;
+  margin: 0 0 12px;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.intro-card p:last-child {
+  margin-bottom: 0;
 }
 
 /* ================= DASHBOARD ================= */
 
 .dashboard {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .card {
-  background: #ffffff;
+  background: var(--cf-card);
   padding: 18px;
   border-radius: 18px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.05);
+  border: 1px solid #eef2f7;
 }
 
 .card h3 {
   font-size: 14px;
-  color: var(--cf-primary);
-  margin-bottom: 6px;
+  color: var(--cf-muted);
+  margin: 0 0 10px;
+  font-weight: 700;
 }
 
 .value {
-  font-size: 22px;
+  font-size: 34px;
   font-weight: 800;
   color: var(--cf-text);
+  line-height: 1.1;
+  word-break: break-word;
 }
 
-/* ================= SECTIONS ================= */
+/* optional colors for specific values */
+.value.income {
+  color: var(--income);
+}
+
+.value.expense {
+  color: var(--expense);
+}
+
+.value.savings {
+  color: var(--savings);
+}
+
+.value.support {
+  color: var(--support);
+}
+
+/* ================= TITLES ================= */
 
 h2 {
   color: var(--cf-primary);
-  margin: 20px 0 10px;
+  margin: 22px 0 12px;
+  font-size: 30px;
+  line-height: 1.2;
 }
 
-/* ================= FORMS ================= */
+/* ================= FORM AREA ================= */
+
+.form-card {
+  background: var(--cf-card);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.04);
+  border: 1px solid #eef2f7;
+  margin-bottom: 18px;
+}
 
 .form-group {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 10px;
-  margin-bottom: 10px;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: center;
 }
 
-input, select {
-  padding: 10px;
-  border-radius: 10px;
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
   border: 1px solid #cbd5e1;
   font-size: 14px;
+  color: var(--cf-text);
+  background: #ffffff;
 }
 
-input:focus, select:focus {
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
   outline: none;
   border-color: var(--cf-accent);
-  box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14);
 }
 
 /* ================= BUTTON ================= */
 
-button {
+button,
+.btn {
   background: var(--cf-primary);
-  color: white;
+  color: #ffffff;
   border: none;
-  padding: 10px 16px;
+  padding: 12px 18px;
   border-radius: 12px;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 14px;
   cursor: pointer;
+  min-height: 46px;
+  transition: 0.2s ease;
+  white-space: nowrap;
 }
 
-button:hover {
+button:hover,
+.btn:hover {
   background: var(--cf-accent);
+  transform: translateY(-1px);
 }
 
-/* ================= CATEGORY COLORS ================= */
+/* ================= TABLE / LIST AREA ================= */
+
+.table-wrap,
+.list-wrap {
+  background: var(--cf-card);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.04);
+  border: 1px solid #eef2f7;
+  overflow-x: auto;
+  margin-bottom: 18px;
+}
+
+/* ================= HELPERS ================= */
 
 .income {
-  color: #22c55e;
+  color: var(--income);
 }
 
 .expense {
-  color: #ef4444;
+  color: var(--expense);
 }
 
 .savings {
-  color: #3b82f6;
+  color: var(--savings);
 }
 
 .support {
-  color: #f59e0b;
+  color: var(--support);
 }
 
 /* ================= MOBILE ================= */
 
+@media (max-width: 900px) {
+  .dashboard {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .form-group {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media (max-width: 768px) {
+  body {
+    padding: 12px;
+  }
 
   .brand-header {
     gap: 12px;
     padding: 14px;
     border-radius: 20px;
+    align-items: center;
   }
 
   .icon-box {
-    width: 70px;
-    height: 70px;
-    min-width: 70px;
+    width: 72px;
+    height: 72px;
+    min-width: 72px;
+    border-radius: 18px;
+    padding: 8px;
   }
 
   .brand-logo {
@@ -212,18 +324,72 @@ button:hover {
 
   .brand-text h1 {
     font-size: 26px;
+    margin-bottom: 4px;
   }
 
   .subline {
     font-size: 11px;
     letter-spacing: 2px;
+    margin-bottom: 4px;
   }
 
   .tagline {
     font-size: 10px;
+    letter-spacing: 1.8px;
+  }
+
+  .intro-card {
+    padding: 18px 16px;
+    border-radius: 18px;
+  }
+
+  .intro-card h2 {
+    font-size: 22px;
+  }
+
+  .intro-card p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 16px;
   }
 
   .value {
-    font-size: 18px;
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin: 20px 0 10px;
+  }
+
+  .form-card {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .form-group {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 11px 12px;
+    font-size: 14px;
+  }
+
+  button,
+  .btn {
+    width: 100%;
   }
 }
