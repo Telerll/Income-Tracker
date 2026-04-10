@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SUBI PH Income Tracker</title>
-  <link rel="manifest" href="app.webmanifest" />
-  <meta name="theme-color" content="#2e7d32" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
+  <title>SUBI PH Cash Flow Tracker</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -18,7 +15,7 @@
 
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(180deg, #ecfdf5 0%, #f8fafc 100%);
+      background: #f4f8f3;
       color: #1f2937;
       padding: 16px;
     }
@@ -31,438 +28,289 @@
     .brand-header {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 16px;
+      background: linear-gradient(135deg, #e8f5e9, #ffffff);
+      border: 1px solid #dbe7dc;
+      border-radius: 22px;
+      padding: 18px;
       margin-bottom: 18px;
-      padding: 16px;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 16px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.05);
     }
 
     .icon-box {
-      width: 70px;
-      height: 70px;
-      border-radius: 14px;
-      overflow: hidden;
-      flex-shrink: 0;
-      background: #2e7d32;
+      width: 84px;
+      height: 84px;
+      border-radius: 22px;
+      background: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 6px 14px rgba(46, 125, 50, 0.18);
+      border: 1px solid #e5e7eb;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
     .brand-logo {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      display: block;
+      object-fit: contain;
     }
 
     .brand-text {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
     }
 
     .brand-text h1 {
-      margin: 0;
-      font-size: 28px;
+      font-size: 32px;
       color: #166534;
-      font-weight: 800;
-      letter-spacing: 1px;
-      line-height: 1.1;
+      margin-bottom: 4px;
     }
 
     .subline {
-      margin: 3px 0;
-      font-size: 12px;
-      color: #64748b;
+      font-size: 13px;
+      font-weight: 700;
       letter-spacing: 2px;
+      color: #374151;
+      margin-bottom: 6px;
     }
 
     .tagline {
-      margin: 0;
-      font-size: 11px;
-      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 700;
       letter-spacing: 2px;
-    }
-
-    .dashboard {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
-      margin-bottom: 18px;
+      color: #2e7d32;
     }
 
     .card,
     .section {
-      background: rgba(255, 255, 255, 0.88);
-      border-radius: 16px;
+      background: rgba(255,255,255,0.94);
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+
+    .card h2,
+    .section h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: #166534;
+    }
+
+    .info-card {
+      background: #f8fafc;
+      border-radius: 14px;
       padding: 14px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-      margin-bottom: 16px;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover,
-    .section:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.07);
-    }
-
-    .card h3,
-    .section h2,
-    .section h3 {
-      color: #2e7d32;
-      margin-bottom: 8px;
-      font-size: 14px;
-    }
-
-    .value {
-      font-size: 20px;
-      font-weight: bold;
+      border: 1px solid #edf2f7;
     }
 
     .muted {
-      color: #666;
-      font-size: 13px;
-      margin-top: 6px;
-      line-height: 1.5;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 10px;
     }
 
-    .form-description {
-      color: #666;
-      font-size: 13px;
-      margin-top: 10px;
-      line-height: 1.5;
+    .muted:last-child {
+      margin-bottom: 0;
     }
 
     .highlight {
       color: #166534;
       font-weight: 700;
-      background: rgba(22, 163, 74, 0.10);
-      padding: 2px 6px;
-      border-radius: 6px;
-      display: inline-block;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .dash-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+
+    .dash-card h3 {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 10px;
+    }
+
+    .value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #166534;
+      word-break: break-word;
     }
 
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px;
-      margin-bottom: 12px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
     }
 
     input,
     select,
-    button,
-    textarea {
+    button {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #cfd8dc;
-      border-radius: 10px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #d1d5db;
       font-size: 14px;
-      transition: all 0.2s ease;
-      font-family: inherit;
-    }
-
-    input,
-    select,
-    textarea {
-      background: #f9fafb;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: #94a3b8;
+      outline: none;
     }
 
     input:focus,
-    select:focus,
-    textarea:focus {
-      outline: none;
+    select:focus {
       border-color: #2e7d32;
-      box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.12);
-      transform: scale(1.01);
-    }
-
-    textarea {
-      resize: none;
+      box-shadow: 0 0 0 3px rgba(46,125,50,0.12);
     }
 
     button {
-      background: linear-gradient(135deg, #2e7d32, #1b5e20);
+      background: #2e7d32;
       color: white;
+      font-weight: 700;
       border: none;
-      font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+      transition: 0.2s ease;
     }
 
     button:hover {
-      opacity: 0.96;
-      transform: translateY(-1px);
+      background: #256428;
     }
 
     .secondary-btn {
-      background: linear-gradient(135deg, #78909c, #607d8b);
+      background: #475569;
+    }
+
+    .secondary-btn:hover {
+      background: #334155;
     }
 
     .danger-btn {
-      background: linear-gradient(135deg, #d32f2f, #b71c1c);
+      background: #b91c1c;
     }
 
-    .btn-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      margin-top: 12px;
-      border-radius: 12px;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 1100px;
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    th,
-    td {
-      padding: 10px;
-      border-bottom: 1px solid #e0e0e0;
-      text-align: left;
-      font-size: 13px;
-      vertical-align: top;
-    }
-
-    th {
-      background: #e8f5e9;
-      color: #1b5e20;
-    }
-
-    .positive {
-      color: #2e7d32;
-      font-weight: bold;
-    }
-
-    .negative {
-      color: #c62828;
-      font-weight: bold;
-    }
-
-    .pill {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 999px;
-      font-size: 12px;
-      background: #e8f5e9;
-      color: #1b5e20;
-    }
-
-    .top-split {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 14px;
-      align-items: start;
-      margin-bottom: 16px;
-    }
-
-    .split-left,
-    .split-right {
-      min-width: 0;
-    }
-
-    .split-left,
-    .split-right {
-      padding: 0;
-      background: transparent;
-      box-shadow: none;
-      margin-bottom: 0;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
-
-    .info-card,
-    .note-card {
-      background: #ffffff;
-      border: 1px solid #edf2f7;
-      border-radius: 14px;
-      padding: 14px;
-      box-shadow: inset 0 1px rgba(255,255,255,0.65);
-      min-height: 150px;
-    }
-
-    .info-card .muted {
-      margin-top: 0;
-      margin-bottom: 10px;
-    }
-
-    .info-card .muted:last-child {
-      margin-bottom: 0;
-    }
-
-    .note-card textarea {
-      min-height: 90px;
-      border-radius: 10px;
-    }
-
-    .top-forms {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
-    .note-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-top: 8px;
-    }
-
-    .note-clear-btn {
-      width: auto !important;
-      display: inline-block;
-      flex: none;
-      padding: 6px 14px;
-      font-size: 12px;
-      border-radius: 8px;
-    }
-
-    #noteStatus {
-      font-size: 12px;
-      color: #64748b;
-    }
-
-    .chart-wrap {
-      margin-top: 12px;
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 12px;
+    .danger-btn:hover {
+      background: #991b1b;
     }
 
     .chart-box {
       position: relative;
       width: 100%;
-      height: 340px;
+      height: 420px;
     }
 
-    .mode-groups {
+    .summary-list {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 12px;
-    }
-
-    .mode-group {
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      padding: 14px;
-    }
-
-    .mode-group.daily-group {
-      border-top: 4px solid #2e7d32;
-    }
-
-    .mode-group.monthly-group {
-      border-top: 4px solid #1d4ed8;
-    }
-
-    .mode-group h3 {
-      margin-bottom: 10px;
-      font-size: 15px;
-    }
-
-    .mode-bank-list {
-      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 10px;
+      margin-top: 14px;
     }
 
-    .mode-bank-card {
-      background: #ffffff;
+    .summary-item {
+      background: #f8fafc;
       border: 1px solid #edf2f7;
       border-radius: 12px;
-      padding: 12px;
-      box-shadow: inset 0 1px rgba(255,255,255,0.7);
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #334155;
     }
 
-    .mode-bank-name {
-      font-size: 14px;
-      font-weight: 700;
+    .summary-item strong {
       color: #166534;
-      margin-bottom: 8px;
     }
 
-    .mode-bank-card.monthly .mode-bank-name {
-      color: #1d4ed8;
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
     }
 
-    .mode-bank-meta {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      background: #fff;
     }
 
-    .mode-item {
-      background: #f8fafc;
-      border-radius: 10px;
-      padding: 8px 10px;
+    thead {
+      background: #e8f5e9;
     }
 
-    .mode-label {
-      display: block;
-      font-size: 11px;
-      color: #64748b;
-      margin-bottom: 4px;
+    th,
+    td {
+      padding: 12px 10px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 14px;
     }
 
-    .mode-value {
-      font-size: 13px;
+    th {
+      color: #166534;
       font-weight: 700;
-      color: #1f2937;
     }
 
-    .mode-empty {
-      font-size: 13px;
-      color: #64748b;
-      padding: 10px 0;
+    td {
+      color: #334155;
     }
 
-    img {
-      max-width: 100%;
-      height: auto;
+    .type-income {
+      color: #166534;
+      font-weight: 700;
+    }
+
+    .type-expense {
+      color: #b91c1c;
+      font-weight: 700;
+    }
+
+    .action-btn {
+      padding: 8px 10px;
+      font-size: 12px;
+      border-radius: 10px;
+    }
+
+    .tools {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .hidden {
+      display: none;
     }
 
     @media (max-width: 1024px) {
       .dashboard {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (max-width: 768px) {
       body {
         padding: 12px;
-      }
-
-      .dashboard {
-        grid-template-columns: repeat(2, 1fr);
       }
 
       .brand-header {
@@ -472,62 +320,37 @@
 
       .brand-text {
         align-items: center;
-        text-align: center;
       }
 
       .brand-text h1 {
         font-size: 26px;
       }
 
-      .subline,
-      .tagline {
-        letter-spacing: 1.5px;
-      }
-
-      .top-split,
-      .top-forms {
+      .dashboard,
+      .form-grid,
+      .form-grid-3,
+      .summary-list,
+      .tools {
         grid-template-columns: 1fr;
-      }
-
-      .split-right {
-        border-top: 1px solid #e5e7eb;
-        padding-top: 12px;
-      }
-
-      .value {
-        font-size: 18px;
-      }
-
-      .card,
-      .section {
-        padding: 12px;
-      }
-
-      .info-card,
-      .note-card {
-        min-height: auto;
       }
 
       .chart-box {
-        height: 260px;
+        height: 520px;
       }
 
-      .mode-groups {
-        grid-template-columns: 1fr;
-      }
-
-      .mode-bank-meta {
-        grid-template-columns: 1fr;
+      .value {
+        font-size: 20px;
       }
     }
 
     @media (max-width: 480px) {
-      .dashboard {
-        grid-template-columns: 1fr;
-      }
-
       .brand-text h1 {
         font-size: 24px;
+      }
+
+      .subline,
+      .tagline {
+        letter-spacing: 1.5px;
       }
     }
   </style>
@@ -542,162 +365,393 @@
 
       <div class="brand-text">
         <h1>SUBI PH</h1>
-        <p class="subline">INCOME TRACKER</p>
+        <p class="subline">CASH FLOW TRACKER</p>
         <p class="tagline">TRACK • MANAGE • SAVE</p>
       </div>
     </div>
-          <div class="card">
-        <h2>What is SUBI</h2>
-        <div class="info-card">
-          <p class="muted">
-            <span class="highlight">SUBI</span> comes from pagsusubi, a deep Filipino term meaning “to save” or mag-impok — the practice of setting aside money for the future.
-          </p>
-          <p class="muted">
-            <span class="highlight">SUBI PH</span> is designed to help you monitor your cash flow in a simple, organized manner—empowering you to build financial discipline and make wiser decisions with your hard-earned money.
-          </p>
-        </div>
+
+    <div class="card">
+      <h2>What is SUBI</h2>
+      <div class="info-card">
+        <p class="muted">
+          <span class="highlight">SUBI</span> comes from pagsusubi, a deep Filipino term meaning “to save” or mag-impok — the practice of setting aside money for the future.
+        </p>
+        <p class="muted">
+          <span class="highlight">SUBI PH</span> is designed to help you monitor your cash flow in a simple, organized manner—empowering you to build financial discipline and make wiser decisions with your hard-earned money.
+        </p>
       </div>
-    
-<div class="dashboard">
-  <div class="card">
-    <h3>Total Income</h3>
-    <div class="value" id="totalIncome">₱0.00</div>
-  </div>
+    </div>
 
-  <div class="card">
-    <h3>Total Expenses</h3>
-    <div class="value" id="totalExpenses">₱0.00</div>
-  </div>
+    <div class="dashboard">
+      <div class="dash-card">
+        <h3>Total Income</h3>
+        <div class="value" id="totalIncome">₱0.00</div>
+      </div>
 
-  <div class="card">
-    <h3>Remaining Balance</h3>
-    <div class="value" id="balance">₱0.00</div>
-  </div>
+      <div class="dash-card">
+        <h3>Total Expenses</h3>
+        <div class="value" id="totalExpenses">₱0.00</div>
+      </div>
 
-  <div class="card">
-    <h3>Savings</h3>
-    <div class="value" id="totalSavings">₱0.00</div>
-  </div>
-</div>
+      <div class="dash-card">
+        <h3>Remaining Balance</h3>
+        <div class="value" id="balance">₱0.00</div>
+      </div>
 
-<div class="section">
-  <h2>Add Salary</h2>
-
-  <div class="top-forms">
-    <input type="date" id="salaryFrom">
-    <input type="date" id="salaryTo">
-    <input type="number" id="salaryAmount" placeholder="Amount">
-    <button onclick="addSalary()">Add Salary</button>
-  </div>
-</div>
-
- <div class="section">
-  <h2>Add Expense</h2>
-
-  <div class="top-forms">
-    <input type="date" id="expenseDate">
-
-    <select id="expenseCategory">
-      <option>Foods</option>
-      <option>Meds</option>
-      <option>Transpo</option>
-      <option>Family Support</option>
-      <option>Wants</option>
-      <option>Savings</option>
-      <option>Rentals</option>
-      <option>Billings</option>
-      <option>Monthly Amortization</option>
-      <option>Loans</option>
-    </select>
-
-    <input type="number" id="expenseAmount" placeholder="Amount">
-    <button onclick="addExpense()">Add Expense</button>
-  </div>
-</div>
+      <div class="dash-card">
+        <h3>Savings</h3>
+        <div class="value" id="totalSavings">₱0.00</div>
+      </div>
+    </div>
 
     <div class="section">
-  <h2>Records</h2>
+      <h2>Add Salary</h2>
+      <div class="form-grid">
+        <input type="date" id="salaryFrom">
+        <input type="date" id="salaryTo">
+        <input type="number" id="salaryAmount" placeholder="Salary Amount">
+        <button onclick="addSalary()">Add Salary</button>
+      </div>
+    </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Category</th>
-        <th>Amount</th>
-      </tr>
-    </thead>
-    <tbody id="recordTable"></tbody>
-  </table>
-</div>
+    <div class="section">
+      <h2>Add Expense</h2>
+      <div class="form-grid">
+        <input type="date" id="expenseDate">
+        <select id="expenseCategory">
+          <option value="Foods">Foods</option>
+          <option value="Meds">Meds</option>
+          <option value="Transpo">Transpo</option>
+          <option value="Family Support">Family Support</option>
+          <option value="Wants">Wants</option>
+          <option value="Savings">Savings</option>
+          <option value="Rentals">Rentals</option>
+          <option value="Billings">Billings</option>
+          <option value="Monthly Amortization">Monthly Amortization</option>
+          <option value="Loans">Loans</option>
+        </select>
+        <input type="number" id="expenseAmount" placeholder="Expense Amount">
+        <button onclick="addExpense()">Add Expense</button>
+      </div>
+    </div>
 
-    <script>
-let records = [];
+    <div class="section">
+      <h2>Where Your Salary Goes</h2>
+      <div class="chart-box">
+        <canvas id="expenseChart"></canvas>
+      </div>
+      <div class="summary-list" id="expenseSummary"></div>
+    </div>
 
-function addSalary() {
-  const from = document.getElementById('salaryFrom').value;
-  const to = document.getElementById('salaryTo').value;
-  const amount = parseFloat(document.getElementById('salaryAmount').value);
+    <div class="section">
+      <h2>Records</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date / Period</th>
+              <th>Type</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="recordTable"></tbody>
+        </table>
+      </div>
+    </div>
 
-  if (!amount) return;
+    <div class="section">
+      <h2>Backup Tools</h2>
+      <div class="tools">
+        <button class="secondary-btn" onclick="exportData()">Export Data</button>
+        <button class="secondary-btn" onclick="document.getElementById('importFile').click()">Import Data</button>
+        <button class="danger-btn" onclick="clearAllData()">Clear All</button>
+        <input type="file" id="importFile" class="hidden" accept=".json" onchange="importData(event)">
+      </div>
+    </div>
 
-  records.push({
-    date: from + " - " + to,
-    type: "Income",
-    category: "Salary",
-    amount: amount
-  });
+  </div>
 
-  render();
-}
+  <script>
+    let records = JSON.parse(localStorage.getItem('subi_cashflow_records')) || [];
+    let expenseChart;
 
-function addExpense() {
-  const date = document.getElementById('expenseDate').value;
-  const category = document.getElementById('expenseCategory').value;
-  const amount = parseFloat(document.getElementById('expenseAmount').value);
+    const categoryColors = {
+      "Foods": "#f59e0b",
+      "Meds": "#ef4444",
+      "Transpo": "#3b82f6",
+      "Family Support": "#8b5cf6",
+      "Wants": "#eab308",
+      "Savings": "#14b8a6",
+      "Rentals": "#a16207",
+      "Billings": "#6366f1",
+      "Monthly Amortization": "#475569",
+      "Loans": "#f43f5e"
+    };
 
-  if (!amount) return;
-
-  records.push({
-    date,
-    type: "Expense",
-    category,
-    amount
-  });
-
-  render();
-}
-
-function render() {
-  const table = document.getElementById('recordTable');
-  table.innerHTML = "";
-
-  let income = 0;
-  let expenses = 0;
-  let savings = 0;
-
-  records.forEach(r => {
-    const row = `
-      <tr>
-        <td>${r.date}</td>
-        <td>${r.type}</td>
-        <td>${r.category}</td>
-        <td>₱${r.amount.toFixed(2)}</td>
-      </tr>
-    `;
-    table.innerHTML += row;
-
-    if (r.type === "Income") income += r.amount;
-    else {
-      expenses += r.amount;
-      if (r.category === "Savings") savings += r.amount;
+    function saveRecords() {
+      localStorage.setItem('subi_cashflow_records', JSON.stringify(records));
     }
-  });
 
-  document.getElementById('totalIncome').innerText = "₱" + income.toFixed(2);
-  document.getElementById('totalExpenses').innerText = "₱" + expenses.toFixed(2);
-  document.getElementById('balance').innerText = "₱" + (income - expenses).toFixed(2);
-  document.getElementById('totalSavings').innerText = "₱" + savings.toFixed(2);
-}
-</script>
-    
+    function formatPeso(value) {
+      return "₱" + Number(value).toLocaleString('en-PH', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function addSalary() {
+      const from = document.getElementById('salaryFrom').value;
+      const to = document.getElementById('salaryTo').value;
+      const amount = parseFloat(document.getElementById('salaryAmount').value);
+
+      if (!from || !to || !amount || amount <= 0) {
+        alert("Please complete the salary fields.");
+        return;
+      }
+
+      records.push({
+        id: Date.now(),
+        date: `${from} to ${to}`,
+        type: "Income",
+        category: "Salary",
+        amount: amount
+      });
+
+      document.getElementById('salaryFrom').value = "";
+      document.getElementById('salaryTo').value = "";
+      document.getElementById('salaryAmount').value = "";
+
+      saveRecords();
+      render();
+    }
+
+    function addExpense() {
+      const date = document.getElementById('expenseDate').value;
+      const category = document.getElementById('expenseCategory').value;
+      const amount = parseFloat(document.getElementById('expenseAmount').value);
+
+      if (!date || !category || !amount || amount <= 0) {
+        alert("Please complete the expense fields.");
+        return;
+      }
+
+      records.push({
+        id: Date.now(),
+        date: date,
+        type: "Expense",
+        category: category,
+        amount: amount
+      });
+
+      document.getElementById('expenseDate').value = "";
+      document.getElementById('expenseAmount').value = "";
+
+      saveRecords();
+      render();
+    }
+
+    function deleteRecord(id) {
+      records = records.filter(record => record.id !== id);
+      saveRecords();
+      render();
+    }
+
+    function updateChart(categoryTotals, totalSalary) {
+      const labels = Object.keys(categoryTotals);
+      const percentages = labels.map(label => {
+        const amount = categoryTotals[label];
+        return totalSalary > 0 ? Number(((amount / totalSalary) * 100).toFixed(1)) : 0;
+      });
+
+      const colors = labels.map(label => categoryColors[label] || "#94a3b8");
+      const ctx = document.getElementById('expenseChart').getContext('2d');
+
+      if (expenseChart) {
+        expenseChart.destroy();
+      }
+
+      expenseChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: percentages,
+            backgroundColor: colors,
+            borderRadius: 8,
+            borderSkipped: false
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const label = context.label;
+                  const percentage = context.raw;
+                  const amount = categoryTotals[label] || 0;
+                  return `${percentage}% of salary | ${formatPeso(amount)}`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: 100,
+              grid: {
+                color: "rgba(148, 163, 184, 0.18)"
+              },
+              ticks: {
+                callback: function(value) {
+                  return value + "%";
+                },
+                color: "#475569"
+              }
+            },
+            y: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: "#334155",
+                font: {
+                  size: 12,
+                  weight: "600"
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderSummary(categoryTotals, totalSalary) {
+      const summary = document.getElementById('expenseSummary');
+      summary.innerHTML = "";
+
+      const labels = Object.keys(categoryTotals);
+
+      if (labels.length === 0 || totalSalary <= 0) {
+        summary.innerHTML = `
+          <div class="summary-item">Add salary and expenses to see the percentage breakdown.</div>
+        `;
+        return;
+      }
+
+      labels.forEach(label => {
+        const amount = categoryTotals[label];
+        const percentage = ((amount / totalSalary) * 100).toFixed(1);
+
+        const item = document.createElement('div');
+        item.className = 'summary-item';
+        item.innerHTML = `<strong>${label}</strong><br>${formatPeso(amount)} • ${percentage}% of salary`;
+        summary.appendChild(item);
+      });
+    }
+
+    function render() {
+      const table = document.getElementById('recordTable');
+      table.innerHTML = "";
+
+      let totalIncome = 0;
+      let totalExpenses = 0;
+      let totalSavings = 0;
+      const categoryTotals = {};
+
+      records.forEach(record => {
+        if (record.type === "Income") {
+          totalIncome += record.amount;
+        } else {
+          totalExpenses += record.amount;
+
+          if (record.category === "Savings") {
+            totalSavings += record.amount;
+          }
+
+          if (!categoryTotals[record.category]) {
+            categoryTotals[record.category] = 0;
+          }
+          categoryTotals[record.category] += record.amount;
+        }
+      });
+
+      records.slice().reverse().forEach(record => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+          <td>${record.date}</td>
+          <td class="${record.type === 'Income' ? 'type-income' : 'type-expense'}">${record.type}</td>
+          <td>${record.category}</td>
+          <td>${formatPeso(record.amount)}</td>
+          <td><button class="danger-btn action-btn" onclick="deleteRecord(${record.id})">Delete</button></td>
+        `;
+
+        table.appendChild(row);
+      });
+
+      document.getElementById('totalIncome').textContent = formatPeso(totalIncome);
+      document.getElementById('totalExpenses').textContent = formatPeso(totalExpenses);
+      document.getElementById('balance').textContent = formatPeso(totalIncome - totalExpenses);
+      document.getElementById('totalSavings').textContent = formatPeso(totalSavings);
+
+      updateChart(categoryTotals, totalIncome);
+      renderSummary(categoryTotals, totalIncome);
+    }
+
+    function exportData() {
+      const dataStr = JSON.stringify(records, null, 2);
+      const blob = new Blob([dataStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = "subi-cashflow-backup.json";
+      a.click();
+
+      URL.revokeObjectURL(url);
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (Array.isArray(imported)) {
+            records = imported;
+            saveRecords();
+            render();
+            alert("Data imported successfully.");
+          } else {
+            alert("Invalid backup file.");
+          }
+        } catch (error) {
+          alert("Error reading file.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function clearAllData() {
+      const confirmClear = confirm("Are you sure you want to delete all records?");
+      if (!confirmClear) return;
+
+      records = [];
+      saveRecords();
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>
