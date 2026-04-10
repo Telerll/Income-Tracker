@@ -44,26 +44,26 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
-  background: linear-gradient(135deg, var(--cf-soft), var(--cf-soft-2));
-  border: 1px solid var(--cf-border);
-  border-radius: 22px;
+  background: linear-gradient(135deg, #eaf4ff, #f8fbff);
+  border: 1px solid #dbeafe;
+  border-radius: 20px;
   padding: 16px 18px;
   margin-bottom: 18px;
   box-shadow: 0 6px 18px rgba(0, 125, 255, 0.08);
 }
 
 .icon-box {
-  width: 88px;
-  height: 88px;
-  min-width: 88px;
-  border-radius: 22px;
+  width: 84px;
+  height: 84px;
+  min-width: 84px;
+  border-radius: 20px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .brand-logo {
@@ -77,31 +77,60 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-width: 0;
 }
 
 .brand-text h1 {
   font-size: 30px;
   font-weight: 800;
   color: #0f172a;
-  margin-bottom: 4px;
+  margin: 0 0 4px;
   line-height: 1;
-  letter-spacing: 0.5px;
 }
 
 .subline {
-  font-size: 12px;
-  letter-spacing: 4px;
+  margin: 0 0 4px;
+  font-size: 13px;
+  letter-spacing: 3px;
   color: #94a3b8;
-  margin-bottom: 4px;
   font-weight: 500;
 }
 
 .tagline {
-  font-size: 11px;
-  font-weight: 700;
+  margin: 0;
+  font-size: 12px;
   letter-spacing: 2px;
-  color: var(--cf-primary);
+  color: #2563eb;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .brand-header {
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 16px;
+  }
+
+  .icon-box {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    border-radius: 16px;
+    padding: 6px;
+  }
+
+  .brand-text h1 {
+    font-size: 24px;
+  }
+
+  .subline {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  .tagline {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
 }
 
 /* GENERAL CARDS */
