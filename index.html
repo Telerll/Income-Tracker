@@ -269,6 +269,90 @@
       transform: translateY(-1px);
     }
 
+    .action-btn {
+      padding: 8px 10px;
+      font-size: 12px;
+      border-radius: 10px;
+    }
+
+    .inline-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .inline-item {
+      background: #f0f7ff;
+      border: 1px solid #dbeafe;
+      border-radius: 14px;
+      padding: 14px 12px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    }
+
+    .inline-label {
+      display: block;
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    .inline-value {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .record-dropdown {
+      overflow: hidden;
+    }
+
+    .record-dropdown summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: 700;
+      color: var(--cf-primary);
+      padding: 2px 0 12px;
+      user-select: none;
+    }
+
+    .record-dropdown summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .record-dropdown summary .summary-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .record-dropdown summary .summary-count {
+      font-size: 12px;
+      color: #64748b;
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+
+    .record-dropdown summary .summary-arrow {
+      font-size: 14px;
+      color: #64748b;
+      transition: transform 0.2s ease;
+    }
+
+    .record-dropdown[open] summary .summary-arrow {
+      transform: rotate(180deg);
+    }
+
+    .records-body {
+      padding-top: 4px;
+    }
+
     .table-wrap {
       overflow-x: auto;
       border-radius: 14px;
@@ -314,12 +398,6 @@
       font-weight: 700;
     }
 
-    .action-btn {
-      padding: 8px 10px;
-      font-size: 12px;
-      border-radius: 10px;
-    }
-
     .tools {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -351,34 +429,6 @@
 
     .summary-item strong {
       color: var(--cf-primary);
-    }
-
-    .inline-stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-top: 10px;
-    }
-
-    .inline-item {
-      background: #f0f7ff;
-      border: 1px solid #dbeafe;
-      border-radius: 14px;
-      padding: 14px 12px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-    }
-
-    .inline-label {
-      display: block;
-      font-size: 12px;
-      color: #64748b;
-      margin-bottom: 6px;
-    }
-
-    .inline-value {
-      font-size: 20px;
-      font-weight: 800;
     }
 
     .empty-note {
@@ -466,10 +516,6 @@
     }
 
     @media (max-width: 480px) {
-      .brand-header {
-        align-items: center;
-      }
-
       .brand-text h1 {
         font-size: 24px;
       }
@@ -593,28 +639,38 @@
     </div>
 
     <div class="section">
-      <h2>Records</h2>
+      <details class="record-dropdown" open>
+        <summary>
+          <div class="summary-left">
+            <span>Records</span>
+            <span class="summary-count" id="recordCountBadge">0 items</span>
+          </div>
+          <span class="summary-arrow">▼</span>
+        </summary>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Date / Period</th>
-              <th>Type</th>
-              <th>Category</th>
-              <th>Amount</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="recordTable"></tbody>
-        </table>
-      </div>
+        <div class="records-body">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date / Period</th>
+                  <th>Type</th>
+                  <th>Category</th>
+                  <th>Amount</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="recordTable"></tbody>
+            </table>
+          </div>
 
-      <div class="filter-grid">
-        <input type="text" id="searchInput" placeholder="Search category, type, date..." oninput="render()">
-        <input type="month" id="monthFilter" oninput="render()">
-        <button class="secondary-btn" onclick="clearFilters()">Clear Filters</button>
-      </div>
+          <div class="filter-grid">
+            <input type="text" id="searchInput" placeholder="Search category, type, date..." oninput="render()">
+            <input type="month" id="monthFilter" oninput="render()">
+            <button class="secondary-btn" onclick="clearFilters()">Clear Filters</button>
+          </div>
+        </div>
+      </details>
     </div>
 
     <div class="section">
@@ -839,7 +895,7 @@
 
       const labels = Object.keys(categoryTotals);
 
-      if (labels.length === 0 || totalExpenses <= 0) {
+      if (labels.length === 0 || (totalExpenses <= 0 && totalIncome <= 0)) {
         summary.innerHTML = `<div class="summary-item empty-note">Add salary and expenses to see the breakdown.</div>`;
         return;
       }
@@ -870,10 +926,10 @@
         if (record.type === "Income") {
           totalIncome += record.amount;
         } else {
-          totalExpenses += record.amount;
-
           if (record.category === "Savings") {
             totalSavings += record.amount;
+          } else {
+            totalExpenses += record.amount;
           }
 
           if (!categoryTotals[record.category]) {
@@ -884,11 +940,15 @@
       });
 
       filteredRecords.slice().reverse().forEach(record => {
+        const isSavingsRecord = record.type === "Expense" && record.category === "Savings";
+        const typeClass = record.type === "Income" ? "type-income" : (isSavingsRecord ? "savings-color" : "type-expense");
+        const typeLabel = record.type === "Income" ? "Income" : (isSavingsRecord ? "Savings Transfer" : "Expense");
+
         const row = document.createElement('tr');
 
         row.innerHTML = `
           <td>${record.date}</td>
-          <td class="${record.type === 'Income' ? 'type-income' : 'type-expense'}">${record.type}</td>
+          <td class="${typeClass}">${typeLabel}</td>
           <td>${record.category}</td>
           <td>${formatPeso(record.amount)}</td>
           <td><button class="danger-btn action-btn" onclick="deleteRecord(${record.id})">Delete</button></td>
@@ -903,7 +963,7 @@
         table.appendChild(row);
       }
 
-      const balance = totalIncome - totalExpenses;
+      const balance = totalIncome - totalExpenses - totalSavings;
       const savingsPercent = totalIncome > 0 ? (totalSavings / totalIncome) * 100 : 0;
       const expensesPercent = totalIncome > 0 ? (totalExpenses / totalIncome) * 100 : 0;
 
@@ -917,8 +977,11 @@
       document.getElementById('savingsPercent').textContent = formatPercent(savingsPercent);
       document.getElementById('expensesPercent').textContent = formatPercent(expensesPercent);
 
-      updateChart(categoryTotals, totalExpenses);
-      renderSummary(categoryTotals, totalIncome, totalExpenses);
+      document.getElementById('recordCountBadge').textContent =
+        `${filteredRecords.length} ${filteredRecords.length === 1 ? 'item' : 'items'}`;
+
+      updateChart(categoryTotals, totalExpenses + totalSavings);
+      renderSummary(categoryTotals, totalIncome, totalExpenses + totalSavings);
     }
 
     function exportData() {
