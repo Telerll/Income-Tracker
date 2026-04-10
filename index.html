@@ -557,3 +557,147 @@
           </p>
         </div>
       </div>
+    
+<div class="dashboard">
+  <div class="card">
+    <h3>Total Income</h3>
+    <div class="value" id="totalIncome">₱0.00</div>
+  </div>
+
+  <div class="card">
+    <h3>Total Expenses</h3>
+    <div class="value" id="totalExpenses">₱0.00</div>
+  </div>
+
+  <div class="card">
+    <h3>Remaining Balance</h3>
+    <div class="value" id="balance">₱0.00</div>
+  </div>
+
+  <div class="card">
+    <h3>Savings</h3>
+    <div class="value" id="totalSavings">₱0.00</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Add Salary</h2>
+
+  <div class="top-forms">
+    <input type="date" id="salaryFrom">
+    <input type="date" id="salaryTo">
+    <input type="number" id="salaryAmount" placeholder="Amount">
+    <button onclick="addSalary()">Add Salary</button>
+  </div>
+</div>
+
+ <div class="section">
+  <h2>Add Expense</h2>
+
+  <div class="top-forms">
+    <input type="date" id="expenseDate">
+
+    <select id="expenseCategory">
+      <option>Foods</option>
+      <option>Meds</option>
+      <option>Transpo</option>
+      <option>Family Support</option>
+      <option>Wants</option>
+      <option>Savings</option>
+      <option>Rentals</option>
+      <option>Billings</option>
+      <option>Monthly Amortization</option>
+      <option>Loans</option>
+    </select>
+
+    <input type="number" id="expenseAmount" placeholder="Amount">
+    <button onclick="addExpense()">Add Expense</button>
+  </div>
+</div>
+
+    <div class="section">
+  <h2>Records</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Category</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody id="recordTable"></tbody>
+  </table>
+</div>
+
+    <script>
+let records = [];
+
+function addSalary() {
+  const from = document.getElementById('salaryFrom').value;
+  const to = document.getElementById('salaryTo').value;
+  const amount = parseFloat(document.getElementById('salaryAmount').value);
+
+  if (!amount) return;
+
+  records.push({
+    date: from + " - " + to,
+    type: "Income",
+    category: "Salary",
+    amount: amount
+  });
+
+  render();
+}
+
+function addExpense() {
+  const date = document.getElementById('expenseDate').value;
+  const category = document.getElementById('expenseCategory').value;
+  const amount = parseFloat(document.getElementById('expenseAmount').value);
+
+  if (!amount) return;
+
+  records.push({
+    date,
+    type: "Expense",
+    category,
+    amount
+  });
+
+  render();
+}
+
+function render() {
+  const table = document.getElementById('recordTable');
+  table.innerHTML = "";
+
+  let income = 0;
+  let expenses = 0;
+  let savings = 0;
+
+  records.forEach(r => {
+    const row = `
+      <tr>
+        <td>${r.date}</td>
+        <td>${r.type}</td>
+        <td>${r.category}</td>
+        <td>₱${r.amount.toFixed(2)}</td>
+      </tr>
+    `;
+    table.innerHTML += row;
+
+    if (r.type === "Income") income += r.amount;
+    else {
+      expenses += r.amount;
+      if (r.category === "Savings") savings += r.amount;
+    }
+  });
+
+  document.getElementById('totalIncome').innerText = "₱" + income.toFixed(2);
+  document.getElementById('totalExpenses').innerText = "₱" + expenses.toFixed(2);
+  document.getElementById('balance').innerText = "₱" + (income - expenses).toFixed(2);
+  document.getElementById('totalSavings').innerText = "₱" + savings.toFixed(2);
+}
+</script>
+    
