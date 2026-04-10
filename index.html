@@ -27,11 +27,9 @@
       --income: #16a34a;
       --expense: #dc2626;
       --savings: #2563eb;
-      --support: #d97706;
+      --warning: #f59e0b;
       --shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
-      --radius-lg: 22px;
       --radius-md: 16px;
-      --radius-sm: 12px;
     }
 
     html {
@@ -198,6 +196,17 @@
       color: var(--savings);
     }
 
+    .value.bills-color {
+      color: var(--warning);
+    }
+
+    .form-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
     .form-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -316,7 +325,7 @@
     .chart-box {
       position: relative;
       width: 100%;
-      height: 460px;
+      height: 420px;
       margin-top: 8px;
     }
 
@@ -340,6 +349,33 @@
       color: var(--cf-primary);
     }
 
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .comparison-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+
+    .comparison-card h3 {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 10px;
+    }
+
+    .comparison-note {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #475569;
+    }
+
     .empty-note {
       font-size: 13px;
       color: #64748b;
@@ -355,7 +391,8 @@
       }
 
       .form-grid,
-      .filter-grid {
+      .filter-grid,
+      .comparison-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
@@ -396,15 +433,17 @@
       }
 
       .dashboard,
+      .form-split,
       .form-grid,
       .filter-grid,
       .summary-list,
-      .tools {
+      .tools,
+      .comparison-grid {
         grid-template-columns: 1fr;
       }
 
       .chart-box {
-        height: 520px;
+        height: 420px;
       }
 
       .value {
@@ -482,34 +521,61 @@
       </div>
     </div>
 
-    <div class="section">
-      <h2>Add Salary</h2>
-      <div class="form-grid">
-        <input type="date" id="salaryFrom">
-        <input type="date" id="salaryTo">
-        <input type="number" id="salaryAmount" placeholder="Salary Amount">
-        <button onclick="addSalary()">Add Salary</button>
+    <div class="dashboard">
+      <div class="dash-card">
+        <h3>Bills Total</h3>
+        <div class="value bills-color" id="billsTotal">₱0.00</div>
+      </div>
+
+      <div class="dash-card">
+        <h3>Bills % of Income</h3>
+        <div class="value bills-color" id="billsPercent">0.0%</div>
+      </div>
+
+      <div class="dash-card">
+        <h3>Savings % of Income</h3>
+        <div class="value savings-color" id="savingsPercent">0.0%</div>
+      </div>
+
+      <div class="dash-card">
+        <h3>Expenses % of Income</h3>
+        <div class="value expense-color" id="expensesPercent">0.0%</div>
       </div>
     </div>
 
-    <div class="section">
-      <h2>Add Expense</h2>
-      <div class="form-grid">
-        <input type="date" id="expenseDate">
-        <select id="expenseCategory">
-          <option value="Foods">Foods</option>
-          <option value="Meds">Meds</option>
-          <option value="Transpo">Transpo</option>
-          <option value="Family Support">Family Support</option>
-          <option value="Wants">Wants</option>
-          <option value="Savings">Savings</option>
-          <option value="Rentals">Rentals</option>
-          <option value="Billings">Billings</option>
-          <option value="Monthly Amortization">Monthly Amortization</option>
-          <option value="Loans">Loans</option>
-        </select>
-        <input type="number" id="expenseAmount" placeholder="Expense Amount">
-        <button onclick="addExpense()">Add Expense</button>
+    <div class="form-split">
+      <div class="section">
+        <h2>Add Salary</h2>
+        <div class="form-grid">
+          <input type="date" id="salaryFrom">
+          <input type="date" id="salaryTo">
+          <input type="number" id="salaryAmount" placeholder="Salary Amount">
+          <button onclick="addSalary()">Add Salary</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Add Expense</h2>
+        <div class="form-grid">
+          <input type="date" id="expenseDate">
+          <select id="expenseCategory">
+            <option value="Foods">Foods</option>
+            <option value="Meds">Meds</option>
+            <option value="Transpo">Transpo</option>
+            <option value="Family Support">Family Support</option>
+            <option value="Wants">Wants</option>
+            <option value="Savings">Savings</option>
+            <option value="Bills - Electric">Bills - Electric</option>
+            <option value="Bills - Water">Bills - Water</option>
+            <option value="Bills - Internet">Bills - Internet</option>
+            <option value="Bills - Plans">Bills - Plans</option>
+            <option value="Rentals">Rentals</option>
+            <option value="Monthly Amortization">Monthly Amortization</option>
+            <option value="Loans">Loans</option>
+          </select>
+          <input type="number" id="expenseAmount" placeholder="Expense Amount">
+          <button onclick="addExpense()">Add Expense</button>
+        </div>
       </div>
     </div>
 
@@ -519,6 +585,22 @@
         <input type="text" id="searchInput" placeholder="Search category, type, date..." oninput="render()">
         <input type="month" id="monthFilter" oninput="render()">
         <button class="secondary-btn" onclick="clearFilters()">Clear Filters</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Income versus Savings</h2>
+      <div class="comparison-grid">
+        <div class="comparison-card">
+          <h3>Total Income</h3>
+          <div class="value income-color" id="compareIncome">₱0.00</div>
+          <div class="comparison-note" id="compareIncomeNote">Base amount for comparison.</div>
+        </div>
+        <div class="comparison-card">
+          <h3>Total Savings</h3>
+          <div class="value savings-color" id="compareSavings">₱0.00</div>
+          <div class="comparison-note" id="compareSavingsNote">0.0% of your income.</div>
+        </div>
       </div>
     </div>
 
@@ -541,7 +623,7 @@
     </div>
 
     <div class="section">
-      <h2>Where Your Salary Goes</h2>
+      <h2>Expense Breakdown</h2>
       <div class="chart-box">
         <canvas id="expenseChart"></canvas>
       </div>
@@ -571,11 +653,21 @@
       "Family Support": "#8b5cf6",
       "Wants": "#eab308",
       "Savings": "#14b8a6",
+      "Bills - Electric": "#f97316",
+      "Bills - Water": "#0ea5e9",
+      "Bills - Internet": "#6366f1",
+      "Bills - Plans": "#ec4899",
       "Rentals": "#a16207",
-      "Billings": "#6366f1",
       "Monthly Amortization": "#475569",
       "Loans": "#f43f5e"
     };
+
+    const billCategories = [
+      "Bills - Electric",
+      "Bills - Water",
+      "Bills - Internet",
+      "Bills - Plans"
+    ];
 
     function saveRecords() {
       localStorage.setItem('subi_cashflow_records', JSON.stringify(records));
@@ -586,6 +678,10 @@
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       });
+    }
+
+    function formatPercent(value) {
+      return Number(value).toFixed(1) + "%";
     }
 
     function getRecordMonth(record) {
@@ -645,7 +741,7 @@
       }
 
       records.push({
-        id: Date.now(),
+        id: Date.now() + Math.floor(Math.random() * 1000),
         date: date,
         type: "Expense",
         category: category,
@@ -671,13 +767,9 @@
       render();
     }
 
-    function updateChart(categoryTotals, totalSalary) {
+    function updateChart(categoryTotals, totalExpenses) {
       const labels = Object.keys(categoryTotals);
-      const percentages = labels.map(label => {
-        const amount = categoryTotals[label];
-        return totalSalary > 0 ? Number(((amount / totalSalary) * 100).toFixed(1)) : 0;
-      });
-
+      const amounts = labels.map(label => categoryTotals[label]);
       const colors = labels.map(label => categoryColors[label] || "#94a3b8");
       const ctx = document.getElementById('expenseChart').getContext('2d');
 
@@ -685,59 +777,66 @@
         expenseChart.destroy();
       }
 
+      if (labels.length === 0 || totalExpenses <= 0) {
+        expenseChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: ['No Expenses Yet'],
+            datasets: [{
+              data: [1],
+              backgroundColor: ['#cbd5e1']
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom'
+              },
+              tooltip: {
+                callbacks: {
+                  label: function() {
+                    return 'Add expenses to see chart data.';
+                  }
+                }
+              }
+            }
+          }
+        });
+        return;
+      }
+
       expenseChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'pie',
         data: {
           labels: labels,
           datasets: [{
-            data: percentages,
+            data: amounts,
             backgroundColor: colors,
-            borderRadius: 8,
-            borderSkipped: false
+            borderColor: '#ffffff',
+            borderWidth: 2
           }]
         },
         options: {
-          indexAxis: 'y',
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
             legend: {
-              display: false
+              position: 'bottom',
+              labels: {
+                boxWidth: 14,
+                color: '#334155',
+                padding: 14
+              }
             },
             tooltip: {
               callbacks: {
                 label: function(context) {
                   const label = context.label;
-                  const percentage = context.raw;
                   const amount = categoryTotals[label] || 0;
-                  return `${percentage}% of salary | ${formatPeso(amount)}`;
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              beginAtZero: true,
-              max: 100,
-              grid: {
-                color: "rgba(148, 163, 184, 0.18)"
-              },
-              ticks: {
-                callback: function(value) {
-                  return value + "%";
-                },
-                color: "#475569"
-              }
-            },
-            y: {
-              grid: {
-                display: false
-              },
-              ticks: {
-                color: "#334155",
-                font: {
-                  size: 12,
-                  weight: "600"
+                  const percent = totalExpenses > 0 ? ((amount / totalExpenses) * 100).toFixed(1) : 0;
+                  return `${label}: ${formatPeso(amount)} (${percent}% of expenses)`;
                 }
               }
             }
@@ -746,24 +845,25 @@
       });
     }
 
-    function renderSummary(categoryTotals, totalSalary) {
+    function renderSummary(categoryTotals, totalIncome, totalExpenses) {
       const summary = document.getElementById('expenseSummary');
       summary.innerHTML = "";
 
       const labels = Object.keys(categoryTotals);
 
-      if (labels.length === 0 || totalSalary <= 0) {
-        summary.innerHTML = `<div class="summary-item empty-note">Add salary and expenses to see the percentage breakdown.</div>`;
+      if (labels.length === 0 || totalExpenses <= 0) {
+        summary.innerHTML = `<div class="summary-item empty-note">Add salary and expenses to see the breakdown.</div>`;
         return;
       }
 
       labels.forEach(label => {
         const amount = categoryTotals[label];
-        const percentage = ((amount / totalSalary) * 100).toFixed(1);
+        const expensePercent = totalExpenses > 0 ? ((amount / totalExpenses) * 100).toFixed(1) : 0;
+        const incomePercent = totalIncome > 0 ? ((amount / totalIncome) * 100).toFixed(1) : 0;
 
         const item = document.createElement('div');
         item.className = 'summary-item';
-        item.innerHTML = `<strong>${label}</strong><br>${formatPeso(amount)} • ${percentage}% of salary`;
+        item.innerHTML = `<strong>${label}</strong><br>${formatPeso(amount)} • ${expensePercent}% of expenses • ${incomePercent}% of income`;
         summary.appendChild(item);
       });
     }
@@ -776,6 +876,7 @@
       let totalIncome = 0;
       let totalExpenses = 0;
       let totalSavings = 0;
+      let billsTotal = 0;
       const categoryTotals = {};
 
       filteredRecords.forEach(record => {
@@ -786,6 +887,10 @@
 
           if (record.category === "Savings") {
             totalSavings += record.amount;
+          }
+
+          if (billCategories.includes(record.category)) {
+            billsTotal += record.amount;
           }
 
           if (!categoryTotals[record.category]) {
@@ -815,13 +920,32 @@
         table.appendChild(row);
       }
 
+      const balance = totalIncome - totalExpenses;
+      const billsPercent = totalIncome > 0 ? (billsTotal / totalIncome) * 100 : 0;
+      const savingsPercent = totalIncome > 0 ? (totalSavings / totalIncome) * 100 : 0;
+      const expensesPercent = totalIncome > 0 ? (totalExpenses / totalIncome) * 100 : 0;
+
       document.getElementById('totalIncome').textContent = formatPeso(totalIncome);
       document.getElementById('totalExpenses').textContent = formatPeso(totalExpenses);
-      document.getElementById('balance').textContent = formatPeso(totalIncome - totalExpenses);
+      document.getElementById('balance').textContent = formatPeso(balance);
       document.getElementById('totalSavings').textContent = formatPeso(totalSavings);
 
-      updateChart(categoryTotals, totalIncome);
-      renderSummary(categoryTotals, totalIncome);
+      document.getElementById('billsTotal').textContent = formatPeso(billsTotal);
+      document.getElementById('billsPercent').textContent = formatPercent(billsPercent);
+      document.getElementById('savingsPercent').textContent = formatPercent(savingsPercent);
+      document.getElementById('expensesPercent').textContent = formatPercent(expensesPercent);
+
+      document.getElementById('compareIncome').textContent = formatPeso(totalIncome);
+      document.getElementById('compareSavings').textContent = formatPeso(totalSavings);
+      document.getElementById('compareIncomeNote').textContent = totalIncome > 0
+        ? `Your savings is compared against this income total.`
+        : `Add income to start comparison.`;
+      document.getElementById('compareSavingsNote').textContent = totalIncome > 0
+        ? `${formatPercent(savingsPercent)} of your income is going to savings.`
+        : `0.0% of your income.`;
+
+      updateChart(categoryTotals, totalExpenses);
+      renderSummary(categoryTotals, totalIncome, totalExpenses);
     }
 
     function exportData() {
