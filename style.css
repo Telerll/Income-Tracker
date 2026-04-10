@@ -1,3 +1,11 @@
+:root {
+  --cf-primary: #1e3a8a;
+  --cf-accent: #3b82f6;
+  --cf-soft: #eff6ff;
+  --cf-border: #bfdbfe;
+  --cf-text: #0f172a;
+}
+
 * {
   margin: 0;
   padding: 0;
