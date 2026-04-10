@@ -156,9 +156,9 @@
       gap: 12px;
     }
 
-    .form-grid-3 {
+    .filter-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1.2fr 1fr 1fr;
       gap: 12px;
     }
 
@@ -171,6 +171,7 @@
       border: 1px solid #d1d5db;
       font-size: 14px;
       outline: none;
+      background: #fff;
     }
 
     input:focus,
@@ -208,32 +209,6 @@
       background: #991b1b;
     }
 
-    .chart-box {
-      position: relative;
-      width: 100%;
-      height: 420px;
-    }
-
-    .summary-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .summary-item {
-      background: #f8fafc;
-      border: 1px solid #edf2f7;
-      border-radius: 12px;
-      padding: 10px 12px;
-      font-size: 13px;
-      color: #334155;
-    }
-
-    .summary-item strong {
-      color: #166534;
-    }
-
     .table-wrap {
       overflow-x: auto;
       border-radius: 14px;
@@ -243,7 +218,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 720px;
+      min-width: 760px;
       background: #fff;
     }
 
@@ -290,6 +265,37 @@
       gap: 12px;
     }
 
+    .chart-box {
+      position: relative;
+      width: 100%;
+      height: 460px;
+    }
+
+    .summary-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .summary-item {
+      background: #f8fafc;
+      border: 1px solid #edf2f7;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #334155;
+    }
+
+    .summary-item strong {
+      color: #166534;
+    }
+
+    .empty-note {
+      font-size: 13px;
+      color: #64748b;
+    }
+
     .hidden {
       display: none;
     }
@@ -299,11 +305,8 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .form-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .form-grid-3 {
+      .form-grid,
+      .filter-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
@@ -328,14 +331,14 @@
 
       .dashboard,
       .form-grid,
-      .form-grid-3,
+      .filter-grid,
       .summary-list,
       .tools {
         grid-template-columns: 1fr;
       }
 
       .chart-box {
-        height: 520px;
+        height: 560px;
       }
 
       .value {
@@ -436,11 +439,12 @@
     </div>
 
     <div class="section">
-      <h2>Where Your Salary Goes</h2>
-      <div class="chart-box">
-        <canvas id="expenseChart"></canvas>
+      <h2>Filters</h2>
+      <div class="filter-grid">
+        <input type="text" id="searchInput" placeholder="Search category, type, date..." oninput="render()">
+        <input type="month" id="monthFilter" oninput="render()">
+        <button class="secondary-btn" onclick="clearFilters()">Clear Filters</button>
       </div>
-      <div class="summary-list" id="expenseSummary"></div>
     </div>
 
     <div class="section">
@@ -459,6 +463,14 @@
           <tbody id="recordTable"></tbody>
         </table>
       </div>
+    </div>
+
+    <div class="section">
+      <h2>Where Your Salary Goes</h2>
+      <div class="chart-box">
+        <canvas id="expenseChart"></canvas>
+      </div>
+      <div class="summary-list" id="expenseSummary"></div>
     </div>
 
     <div class="section">
@@ -498,6 +510,26 @@
       return "₱" + Number(value).toLocaleString('en-PH', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
+      });
+    }
+
+    function getRecordMonth(record) {
+      if (record.type === "Income") {
+        return String(record.date).slice(0, 7);
+      }
+      return String(record.date).slice(0, 7);
+    }
+
+    function getFilteredRecords() {
+      const searchText = document.getElementById('searchInput').value.trim().toLowerCase();
+      const monthValue = document.getElementById('monthFilter').value;
+
+      return records.filter(record => {
+        const searchable = `${record.date} ${record.type} ${record.category} ${record.amount}`.toLowerCase();
+        const matchesSearch = !searchText || searchable.includes(searchText);
+        const matchesMonth = !monthValue || getRecordMonth(record) === monthValue;
+
+        return matchesSearch && matchesMonth;
       });
     }
 
@@ -555,6 +587,12 @@
     function deleteRecord(id) {
       records = records.filter(record => record.id !== id);
       saveRecords();
+      render();
+    }
+
+    function clearFilters() {
+      document.getElementById('searchInput').value = "";
+      document.getElementById('monthFilter').value = "";
       render();
     }
 
@@ -640,9 +678,7 @@
       const labels = Object.keys(categoryTotals);
 
       if (labels.length === 0 || totalSalary <= 0) {
-        summary.innerHTML = `
-          <div class="summary-item">Add salary and expenses to see the percentage breakdown.</div>
-        `;
+        summary.innerHTML = `<div class="summary-item empty-note">Add salary and expenses to see the percentage breakdown.</div>`;
         return;
       }
 
@@ -658,6 +694,7 @@
     }
 
     function render() {
+      const filteredRecords = getFilteredRecords();
       const table = document.getElementById('recordTable');
       table.innerHTML = "";
 
@@ -666,7 +703,7 @@
       let totalSavings = 0;
       const categoryTotals = {};
 
-      records.forEach(record => {
+      filteredRecords.forEach(record => {
         if (record.type === "Income") {
           totalIncome += record.amount;
         } else {
@@ -683,7 +720,7 @@
         }
       });
 
-      records.slice().reverse().forEach(record => {
+      filteredRecords.slice().reverse().forEach(record => {
         const row = document.createElement('tr');
 
         row.innerHTML = `
@@ -696,6 +733,12 @@
 
         table.appendChild(row);
       });
+
+      if (filteredRecords.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="5" style="text-align:center; color:#64748b;">No records found.</td>`;
+        table.appendChild(row);
+      }
 
       document.getElementById('totalIncome').textContent = formatPeso(totalIncome);
       document.getElementById('totalExpenses').textContent = formatPeso(totalExpenses);
