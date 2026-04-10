@@ -322,6 +322,7 @@
       border-radius: 12px;
       font-size: 14px;
       outline: none;
+      min-height: 46px;
     }
 
     input,
@@ -378,6 +379,7 @@
       padding: 8px 10px;
       font-size: 12px;
       border-radius: 10px;
+      min-height: auto;
     }
 
     /* INLINE STATS */
@@ -488,6 +490,7 @@
       box-shadow:
         0 8px 18px rgba(0, 125, 255, 0.05),
         inset 0 1px rgba(255,255,255,0.75);
+      -webkit-overflow-scrolling: touch;
     }
 
     table {
@@ -591,34 +594,6 @@
       display: none;
     }
 
-    /* SWIPE CARDS MOBILE */
-    @media (max-width: 768px) {
-      .dashboard {
-        display: flex;
-        gap: 12px;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        padding-bottom: 6px;
-        margin-bottom: 18px;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      .dashboard::-webkit-scrollbar {
-        height: 6px;
-      }
-
-      .dashboard::-webkit-scrollbar-thumb {
-        background: rgba(0, 125, 255, 0.25);
-        border-radius: 999px;
-      }
-
-      .dash-card {
-        min-width: 84%;
-        flex: 0 0 84%;
-        scroll-snap-align: start;
-      }
-    }
-
     /* SCROLL ANIMATION */
     .reveal {
       opacity: 0;
@@ -628,6 +603,7 @@
     .reveal.show {
       opacity: 1;
       transform: translateY(0);
+      transition: opacity 0.45s ease, transform 0.45s ease;
     }
 
     @keyframes fadeSlideUp {
@@ -645,23 +621,38 @@
       animation: fadeSlideUp 0.45s ease both;
     }
 
-    /* MOBILE */
+    /* TABLET */
     @media (max-width: 1024px) {
+      .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .form-grid,
       .filter-grid,
       .inline-stats {
         grid-template-columns: repeat(2, 1fr);
       }
+
+      .tools {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
+    /* MOBILE */
     @media (max-width: 768px) {
       body {
         padding: 12px;
       }
 
+      .container {
+        max-width: 100%;
+      }
+
       .brand-header {
         gap: 10px;
-        padding: 8px 10px;
+        padding: 10px 12px;
+        border-radius: 16px;
+        margin-bottom: 12px;
       }
 
       .icon-box {
@@ -688,6 +679,31 @@
         letter-spacing: 1px;
       }
 
+      .dashboard {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 6px;
+        margin-bottom: 18px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .dashboard::-webkit-scrollbar {
+        height: 6px;
+      }
+
+      .dashboard::-webkit-scrollbar-thumb {
+        background: rgba(0, 125, 255, 0.25);
+        border-radius: 999px;
+      }
+
+      .dash-card {
+        min-width: 84%;
+        flex: 0 0 84%;
+        scroll-snap-align: start;
+      }
+
       .form-split,
       .form-grid,
       .filter-grid,
@@ -697,8 +713,15 @@
         grid-template-columns: 1fr;
       }
 
-      .chart-box {
-        height: 420px;
+      .card,
+      .section {
+        padding: 14px;
+        border-radius: 14px;
+      }
+
+      .card h2,
+      .section h2 {
+        font-size: 18px;
       }
 
       .value {
@@ -709,9 +732,104 @@
         font-size: 18px;
       }
 
-      .card h2,
-      .section h2 {
+      .inline-item {
+        padding: 12px 10px;
+      }
+
+      .filter-grid {
+        gap: 10px;
+      }
+
+      .chart-box {
+        height: 300px;
+      }
+
+      .summary-list {
+        gap: 8px;
+      }
+
+      .summary-item {
+        padding: 10px;
+      }
+
+      .tools {
+        gap: 10px;
+      }
+
+      .action-btn {
+        width: 100%;
+      }
+
+      th,
+      td {
+        padding: 10px 8px;
+        font-size: 13px;
+      }
+    }
+
+    /* SMALL MOBILE */
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .brand-header {
+        padding: 10px;
+        gap: 9px;
+      }
+
+      .icon-box {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        border-radius: 12px;
+      }
+
+      .brand-text h1 {
         font-size: 18px;
+      }
+
+      .subline {
+        font-size: 8px;
+        letter-spacing: 1.2px;
+      }
+
+      .tagline {
+        font-size: 7px;
+        letter-spacing: 0.8px;
+      }
+
+      .dash-card {
+        min-width: 88%;
+        flex: 0 0 88%;
+      }
+
+      .chart-box {
+        height: 260px;
+      }
+
+      .card,
+      .section {
+        padding: 12px;
+      }
+
+      input,
+      select,
+      button {
+        font-size: 13px;
+        padding: 11px 12px;
+      }
+
+      .summary-item {
+        font-size: 12px;
+      }
+
+      .inline-label {
+        font-size: 11px;
+      }
+
+      .inline-value {
+        font-size: 17px;
       }
     }
   </style>
