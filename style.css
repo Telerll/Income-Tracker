@@ -23,29 +23,35 @@ body {
 .brand-header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 
   background: linear-gradient(135deg, #e6f2ff, #f5faff);
   border: 1px solid #dbeafe;
-  border-radius: 16px;
+  border-radius: 18px;
 
-  padding: 12px 14px;
+  padding: 14px 16px;
   margin-bottom: 16px;
+
+  box-shadow: 0 6px 18px rgba(0, 125, 255, 0.08);
 }
 
+/* ⭐ ITO YUNG IBINALIK NATIN (GOOD VERSION) */
 .icon-box {
-  width: 70px;
-  height: 70px;
-  min-width: 70px;
+  width: 78px;
+  height: 78px;
+  min-width: 78px;
 
-  border-radius: 16px;
+  border-radius: 18px;
   background: #ffffff;
+  border: 1px solid #e5e7eb;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   padding: 6px;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
 }
 
 .brand-logo {
@@ -60,19 +66,19 @@ body {
 }
 
 .brand-text h1 {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 800;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 
 .subline {
-  font-size: 11px;
-  letter-spacing: 2px;
+  font-size: 12px;
+  letter-spacing: 3px;
   color: #64748b;
 }
 
 .tagline {
-  font-size: 10px;
+  font-size: 11px;
   color: #2563eb;
   letter-spacing: 1px;
 }
@@ -99,7 +105,7 @@ body {
 .dashboard {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 14px;
 }
 
@@ -240,8 +246,8 @@ th {
   }
 
   .icon-box {
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
   }
 
   .brand-text h1 {
