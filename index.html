@@ -23,10 +23,10 @@
       --muted: #64748b;
       --line: #e5e7eb;
       --white: #ffffff;
-
       --income: #16a34a;
       --expense: #dc2626;
       --savings: #2563eb;
+      --warning: #d97706;
     }
 
     html {
@@ -52,17 +52,12 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-
       border: 1px solid #dbeafe;
       border-radius: 28px;
-
       padding: 26px 18px 22px;
       margin-bottom: 18px;
-
       box-shadow: 0 10px 24px rgba(0, 125, 255, 0.08);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
@@ -77,11 +72,9 @@
       height: 108px;
       min-width: 108px;
       border-radius: 26px;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       margin-bottom: 16px;
       background: #ffffff;
       border: 1px solid #e5e7eb;
@@ -130,13 +123,10 @@
     .section {
       background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(230,242,255,0.82));
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-
       border: 1px solid #dbeafe;
       border-radius: 18px;
       padding: 16px;
       margin-bottom: 16px;
-
       box-shadow: 0 8px 20px rgba(0, 125, 255, 0.08);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
@@ -205,23 +195,16 @@
     }
 
     .value {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 800;
       line-height: 1.1;
       word-break: break-word;
     }
 
-    .income-color {
-      color: var(--income);
-    }
-
-    .expense-color {
-      color: var(--expense);
-    }
-
-    .savings-color {
-      color: var(--savings);
-    }
+    .income-color { color: var(--income); }
+    .expense-color { color: var(--expense); }
+    .savings-color { color: var(--savings); }
+    .warning-color { color: var(--warning); }
 
     .form-split {
       display: grid;
@@ -236,15 +219,30 @@
       gap: 12px;
     }
 
+    .budget-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
     input,
     select,
-    button {
+    button,
+    textarea {
       width: 100%;
       min-height: 46px;
       padding: 12px 14px;
       border-radius: 12px;
       font-size: 14px;
       outline: none;
+      font-family: inherit;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 84px;
+      border: 1px solid #d1d5db;
+      background: rgba(255,255,255,0.92);
     }
 
     input,
@@ -255,7 +253,8 @@
     }
 
     input:focus,
-    select:focus {
+    select:focus,
+    textarea:focus {
       border-color: var(--blue);
       box-shadow: 0 0 0 3px rgba(0, 125, 255, 0.14);
       transform: translateY(-1px);
@@ -285,6 +284,11 @@
     .danger-btn {
       background: linear-gradient(135deg, #dc2626, #b91c1c);
       box-shadow: 0 8px 18px rgba(185, 28, 28, 0.20);
+    }
+
+    .warning-btn {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      box-shadow: 0 8px 18px rgba(217, 119, 6, 0.20);
     }
 
     .action-btn {
@@ -395,7 +399,7 @@
 
     table {
       width: 100%;
-      min-width: 760px;
+      min-width: 960px;
       border-collapse: collapse;
     }
 
@@ -405,6 +409,7 @@
       text-align: left;
       border-bottom: 1px solid var(--line);
       font-size: 14px;
+      vertical-align: top;
     }
 
     th {
@@ -449,6 +454,26 @@
       color: #334155;
     }
 
+    .budget-list {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .budget-item {
+      background: rgba(255,255,255,0.88);
+      border: 1px solid #e6eefc;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+
+    .budget-item.over {
+      border-color: #fed7aa;
+      background: #fff7ed;
+    }
+
     .tools {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -457,6 +482,30 @@
 
     .hidden {
       display: none;
+    }
+
+    .note-preview {
+      color: #475569;
+      font-size: 12px;
+      margin-top: 4px;
+      white-space: normal;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: var(--blue);
+      border: 1px solid #dbeafe;
+    }
+
+    .status-line {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--muted);
     }
 
     @media (max-width: 1024px) {
@@ -468,11 +517,17 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
+      .budget-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .inline-stats {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .tools {
+      .tools,
+      #expenseSummary,
+      .budget-list {
         grid-template-columns: repeat(2, 1fr);
       }
     }
@@ -516,10 +571,12 @@
 
       .form-split,
       .form-grid,
+      .budget-grid,
       .inline-stats,
       .filter-grid,
       .tools,
-      #expenseSummary {
+      #expenseSummary,
+      .budget-list {
         grid-template-columns: 1fr;
       }
 
@@ -607,7 +664,7 @@
           <span class="highlight">SUBI</span> comes from pagsusubi — saving or building financial discipline.
         </p>
         <p class="muted">
-          <span class="highlight">SUBI PH</span> helps you track income, expenses, and savings in a simple way.
+          <span class="highlight">SUBI PH</span> helps you track income, expenses, savings, and budgets in a simple way.
         </p>
       </div>
     </div>
@@ -634,19 +691,44 @@
       </div>
     </div>
 
+    <div class="section">
+      <h2>Monthly Summary</h2>
+      <div class="inline-stats">
+        <div class="inline-item">
+          <span>This Month Income</span>
+          <strong id="monthIncome">₱0.00</strong>
+        </div>
+
+        <div class="inline-item">
+          <span>This Month Expenses</span>
+          <strong id="monthExpenses">₱0.00</strong>
+        </div>
+
+        <div class="inline-item">
+          <span>This Month Savings</span>
+          <strong id="monthSavings">₱0.00</strong>
+        </div>
+
+        <div class="inline-item">
+          <span>Net This Month</span>
+          <strong id="monthNet">₱0.00</strong>
+        </div>
+      </div>
+    </div>
+
     <div class="form-split">
       <div class="section">
-        <h2>Add Salary</h2>
+        <h2 id="salarySectionTitle">Add Salary</h2>
         <div class="form-grid">
           <input type="date" id="salaryFrom">
           <input type="date" id="salaryTo">
           <input type="number" id="salaryAmount" placeholder="Amount">
-          <button onclick="addSalary()">Add</button>
+          <button onclick="addSalary()" id="salaryBtn">Add Salary</button>
         </div>
       </div>
 
       <div class="section">
-        <h2>Add Expense</h2>
+        <h2 id="expenseSectionTitle">Add Expense / Savings</h2>
         <div class="form-grid">
           <input type="date" id="expenseDate">
 
@@ -666,9 +748,40 @@
           </select>
 
           <input type="number" id="expenseAmount" placeholder="Amount">
-          <button onclick="addExpense()">Add</button>
+          <button onclick="addExpense()" id="expenseBtn">Add Record</button>
         </div>
+
+        <div style="margin-top:12px;">
+          <textarea id="expenseNote" placeholder="Notes / Description"></textarea>
+        </div>
+
+        <div class="status-line" id="editStatus">No record selected for editing.</div>
       </div>
+    </div>
+
+    <div class="section">
+      <h2>Budget Limits</h2>
+      <div class="budget-grid">
+        <select id="budgetCategory">
+          <option value="Foods">Foods</option>
+          <option value="Meds">Meds</option>
+          <option value="Transpo">Transpo</option>
+          <option value="Family Support">Family Support</option>
+          <option value="Wants">Wants</option>
+          <option value="Bills - Electric">Bills - Electric</option>
+          <option value="Bills - Water">Bills - Water</option>
+          <option value="Bills - Internet">Bills - Internet</option>
+          <option value="Bills - Plans">Bills - Plans</option>
+          <option value="Rentals">Rentals</option>
+          <option value="Loans">Loans</option>
+        </select>
+
+        <input type="number" id="budgetAmount" placeholder="Budget Amount">
+
+        <button onclick="saveBudget()">Save Budget</button>
+      </div>
+
+      <div class="budget-list" id="budgetList"></div>
     </div>
 
     <div class="section">
@@ -716,6 +829,7 @@
                   <th>Type</th>
                   <th>Category</th>
                   <th>Amount</th>
+                  <th>Notes</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -724,7 +838,7 @@
           </div>
 
           <div class="filter-grid">
-            <input type="text" id="searchInput" placeholder="Search category, type, date..." oninput="render()">
+            <input type="text" id="searchInput" placeholder="Search category, type, note..." oninput="render()">
             <input type="month" id="monthFilter" oninput="render()">
             <button class="secondary-btn" onclick="clearFilters()">Clear Filters</button>
           </div>
@@ -754,7 +868,9 @@
 
   <script>
     let records = JSON.parse(localStorage.getItem('subi_cashflow_records')) || [];
+    let budgets = JSON.parse(localStorage.getItem('subi_cashflow_budgets')) || {};
     let expenseChart;
+    let editingId = null;
 
     const categoryColors = {
       "Foods": "#f59e0b",
@@ -774,14 +890,19 @@
       localStorage.setItem('subi_cashflow_records', JSON.stringify(records));
     }
 
+    function saveBudgetsToStorage() {
+      localStorage.setItem('subi_cashflow_budgets', JSON.stringify(budgets));
+    }
+
     function formatPeso(value) {
-      return "₱" + Number(value).toLocaleString('en-PH', {
-        minimumFractionDigits: 2
+      return "₱" + Number(value || 0).toLocaleString('en-PH', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
       });
     }
 
     function formatPercent(value) {
-      return Number(value).toFixed(1) + "%";
+      return Number(value || 0).toFixed(1) + "%";
     }
 
     function getRecordMonth(record) {
@@ -792,16 +913,31 @@
       return String(record.date).slice(0, 7);
     }
 
+    function getCurrentMonth() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    }
+
     function getFilteredRecords() {
       const searchText = document.getElementById('searchInput').value.trim().toLowerCase();
       const monthValue = document.getElementById('monthFilter').value;
 
       return records.filter(record => {
-        const searchable = `${record.date} ${record.type} ${record.category} ${record.amount}`.toLowerCase();
+        const searchable = `${record.date} ${record.type} ${record.category} ${record.amount} ${record.note || ""}`.toLowerCase();
         const matchesSearch = !searchText || searchable.includes(searchText);
         const matchesMonth = !monthValue || getRecordMonth(record) === monthValue;
         return matchesSearch && matchesMonth;
       });
+    }
+
+    function resetExpenseForm() {
+      document.getElementById('expenseDate').value = "";
+      document.getElementById('expenseAmount').value = "";
+      document.getElementById('expenseNote').value = "";
+      document.getElementById('expenseCategory').value = "Foods";
+      editingId = null;
+      document.getElementById('expenseBtn').textContent = "Add Record";
+      document.getElementById('editStatus').textContent = "No record selected for editing.";
     }
 
     function addSalary() {
@@ -810,16 +946,17 @@
       const amount = parseFloat(document.getElementById('salaryAmount').value);
 
       if (!from || !to || !amount || amount <= 0) {
-        alert("Complete fields");
+        alert("Complete salary fields.");
         return;
       }
 
       records.push({
         id: Date.now(),
-        date: from + " to " + to,
+        date: `${from} to ${to}`,
         type: "Income",
         category: "Salary",
-        amount
+        amount,
+        note: ""
       });
 
       document.getElementById('salaryFrom').value = "";
@@ -834,29 +971,52 @@
       const date = document.getElementById('expenseDate').value;
       const category = document.getElementById('expenseCategory').value;
       const amount = parseFloat(document.getElementById('expenseAmount').value);
+      const note = document.getElementById('expenseNote').value.trim();
 
       if (!date || !amount || amount <= 0) {
-        alert("Complete fields");
+        alert("Complete record fields.");
         return;
       }
 
-      records.push({
-        id: Date.now() + Math.floor(Math.random() * 1000),
-        date,
-        type: "Expense",
-        category,
-        amount
-      });
+      if (editingId) {
+        records = records.map(r =>
+          r.id === editingId
+            ? { ...r, date, category, amount, note, type: "Expense" }
+            : r
+        );
+      } else {
+        records.push({
+          id: Date.now() + Math.floor(Math.random() * 1000),
+          date,
+          type: "Expense",
+          category,
+          amount,
+          note
+        });
+      }
 
-      document.getElementById('expenseDate').value = "";
-      document.getElementById('expenseAmount').value = "";
-
+      resetExpenseForm();
       saveRecords();
       render();
     }
 
+    function editRecord(id) {
+      const record = records.find(r => r.id === id);
+      if (!record || record.type !== "Expense") return;
+
+      editingId = id;
+      document.getElementById('expenseDate').value = record.date;
+      document.getElementById('expenseCategory').value = record.category;
+      document.getElementById('expenseAmount').value = record.amount;
+      document.getElementById('expenseNote').value = record.note || "";
+      document.getElementById('expenseBtn').textContent = "Update Record";
+      document.getElementById('editStatus').textContent = `Editing: ${record.category} - ${formatPeso(record.amount)}`;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
     function deleteRecord(id) {
       records = records.filter(r => r.id !== id);
+      if (editingId === id) resetExpenseForm();
       saveRecords();
       render();
     }
@@ -865,6 +1025,95 @@
       document.getElementById('searchInput').value = "";
       document.getElementById('monthFilter').value = "";
       render();
+    }
+
+    function saveBudget() {
+      const category = document.getElementById('budgetCategory').value;
+      const amount = parseFloat(document.getElementById('budgetAmount').value);
+
+      if (!category || !amount || amount <= 0) {
+        alert("Enter a valid budget.");
+        return;
+      }
+
+      budgets[category] = amount;
+      document.getElementById('budgetAmount').value = "";
+      saveBudgetsToStorage();
+      renderBudgetList();
+      render();
+    }
+
+    function removeBudget(category) {
+      delete budgets[category];
+      saveBudgetsToStorage();
+      renderBudgetList();
+      render();
+    }
+
+    function getCurrentMonthTotals() {
+      const currentMonth = getCurrentMonth();
+      let income = 0;
+      let expenses = 0;
+      let savings = 0;
+
+      records.forEach(record => {
+        if (getRecordMonth(record) !== currentMonth) return;
+
+        if (record.type === "Income") {
+          income += record.amount;
+        } else if (record.category === "Savings") {
+          savings += record.amount;
+        } else {
+          expenses += record.amount;
+        }
+      });
+
+      return {
+        income,
+        expenses,
+        savings,
+        net: income - expenses - savings
+      };
+    }
+
+    function renderBudgetList() {
+      const budgetList = document.getElementById('budgetList');
+      budgetList.innerHTML = "";
+
+      const currentMonth = getCurrentMonth();
+      const categorySpent = {};
+
+      records.forEach(record => {
+        if (record.type === "Expense" && record.category !== "Savings" && getRecordMonth(record) === currentMonth) {
+          categorySpent[record.category] = (categorySpent[record.category] || 0) + record.amount;
+        }
+      });
+
+      const entries = Object.entries(budgets);
+
+      if (entries.length === 0) {
+        budgetList.innerHTML = `<div class="budget-item">No budget limits yet.</div>`;
+        return;
+      }
+
+      entries.forEach(([category, limit]) => {
+        const spent = categorySpent[category] || 0;
+        const remaining = limit - spent;
+        const over = spent > limit;
+
+        const div = document.createElement('div');
+        div.className = `budget-item ${over ? 'over' : ''}`;
+        div.innerHTML = `
+          <div style="display:flex; justify-content:space-between; gap:8px; align-items:center;">
+            <strong>${category}</strong>
+            <button class="danger-btn action-btn" onclick="removeBudget('${category.replace(/'/g, "\\'")}')">Remove</button>
+          </div>
+          <div style="margin-top:8px;">Limit: ${formatPeso(limit)}</div>
+          <div>Spent this month: ${formatPeso(spent)}</div>
+          <div class="${over ? 'warning-color' : ''}">${over ? 'Over budget by ' + formatPeso(Math.abs(remaining)) : 'Remaining: ' + formatPeso(remaining)}</div>
+        `;
+        budgetList.appendChild(div);
+      });
     }
 
     function updateChart(categoryTotals, totalExpenses) {
@@ -949,10 +1198,16 @@
         const amount = categoryTotals[label];
         const expensePercent = totalExpenses > 0 ? ((amount / totalExpenses) * 100).toFixed(1) : 0;
         const incomePercent = totalIncome > 0 ? ((amount / totalIncome) * 100).toFixed(1) : 0;
+        const budget = budgets[label];
+        const over = budget && amount > budget;
 
         const item = document.createElement('div');
         item.className = 'summary-item';
-        item.innerHTML = `<strong>${label}</strong><br>${formatPeso(amount)} • ${expensePercent}% of expenses • ${incomePercent}% of income`;
+        item.innerHTML = `
+          <strong>${label}</strong><br>
+          ${formatPeso(amount)} • ${expensePercent}% of expenses • ${incomePercent}% of income
+          ${budget ? `<div class="${over ? 'warning-color' : ''}" style="margin-top:6px;">Budget: ${formatPeso(budget)} ${over ? '• Over budget' : ''}</div>` : ''}
+        `;
         summary.appendChild(item);
       });
     }
@@ -986,19 +1241,29 @@
         const typeClass = r.type === "Income" ? "type-income" : isSavingsRecord ? "type-savings" : "type-expense";
         const typeLabel = r.type === "Income" ? "Income" : isSavingsRecord ? "Savings Transfer" : "Expense";
 
+        const actionButtons = r.type === "Income"
+          ? `<button class="danger-btn action-btn" onclick="deleteRecord(${r.id})">Delete</button>`
+          : `
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button class="warning-btn action-btn" onclick="editRecord(${r.id})">Edit</button>
+                <button class="danger-btn action-btn" onclick="deleteRecord(${r.id})">Delete</button>
+              </div>
+            `;
+
         table.innerHTML += `
           <tr>
             <td>${r.date}</td>
             <td class="${typeClass}">${typeLabel}</td>
             <td>${r.category}</td>
             <td>${formatPeso(r.amount)}</td>
-            <td><button class="danger-btn action-btn" onclick="deleteRecord(${r.id})">Delete</button></td>
+            <td>${r.note ? `<div class="note-preview">${r.note}</div>` : `<span class="badge">No note</span>`}</td>
+            <td>${actionButtons}</td>
           </tr>
         `;
       });
 
       if (filteredRecords.length === 0) {
-        table.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#64748b;">No records found.</td></tr>`;
+        table.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#64748b;">No records found.</td></tr>`;
       }
 
       const balance = income - expense - savings;
@@ -1016,12 +1281,23 @@
       document.getElementById('recordCountBadge').textContent =
         `${filteredRecords.length} ${filteredRecords.length === 1 ? 'item' : 'items'}`;
 
+      const monthly = getCurrentMonthTotals();
+      document.getElementById('monthIncome').textContent = formatPeso(monthly.income);
+      document.getElementById('monthExpenses').textContent = formatPeso(monthly.expenses);
+      document.getElementById('monthSavings').textContent = formatPeso(monthly.savings);
+      document.getElementById('monthNet').textContent = formatPeso(monthly.net);
+
       updateChart(categoryTotals, expense);
       renderSummary(categoryTotals, income, expense);
+      renderBudgetList();
     }
 
     function exportData() {
-      const blob = new Blob([JSON.stringify(records, null, 2)], {type:"application/json"});
+      const payload = {
+        records,
+        budgets
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
       a.download = "subi-cashflow-backup.json";
@@ -1035,8 +1311,17 @@
       const reader = new FileReader();
       reader.onload = function() {
         try {
-          records = JSON.parse(reader.result);
+          const parsed = JSON.parse(reader.result);
+
+          if (Array.isArray(parsed)) {
+            records = parsed;
+          } else {
+            records = Array.isArray(parsed.records) ? parsed.records : [];
+            budgets = parsed.budgets || {};
+          }
+
           saveRecords();
+          saveBudgetsToStorage();
           render();
         } catch {
           alert("Invalid file");
@@ -1046,13 +1331,18 @@
     }
 
     function clearAllData() {
-      if (confirm("Delete all?")) {
+      if (confirm("Delete all data?")) {
         records = [];
+        budgets = {};
+        editingId = null;
         saveRecords();
+        saveBudgetsToStorage();
+        resetExpenseForm();
         render();
       }
     }
 
+    renderBudgetList();
     render();
   </script>
 </body>
