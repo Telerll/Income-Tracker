@@ -1,30 +1,3 @@
-/* INPUT FIELD UPGRADE (APP FEEL) */
-
-input,
-select,
-textarea {
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  padding: 12px;
-  font-size: 14px;
-  transition: all 0.2s ease;
-  background: #f9fafb;
-}
-
-/* Focus effect (pag pinindot) */
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-  border-color: #16a34a;
-  background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
-}
-
-/* Placeholder style */
-::placeholder {
-  color: #94a3b8;
-}
 .intro-card {
   background: #ffffff;
   border-radius: 24px;
@@ -45,6 +18,28 @@ textarea:focus {
   font-size: 18px;
   line-height: 1.7;
   color: #374151;
+}
+.card h3 {
+  color: var(--cf-primary);
+}
+
+.value {
+  color: var(--cf-text);
+}
+.income {
+  color: #22c55e;
+}
+
+.expense {
+  color: #ef4444;
+}
+
+.savings {
+  color: #3b82f6;
+}
+
+.support {
+  color: #f59e0b;
 }
 @media (max-width: 768px) {
   .brand-header {
