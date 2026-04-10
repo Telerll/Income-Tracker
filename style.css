@@ -1,4 +1,4 @@
-l/* RESET */
+/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -48,7 +48,6 @@ body {
   margin-bottom: 14px;
 
   box-shadow: 0 8px 20px rgba(0,125,255,0.10);
-
   transition: 0.2s;
 }
 
@@ -60,9 +59,8 @@ body {
 .icon-box {
   width: 60px;
   height: 60px;
-
-  background: #ffffff;
   border-radius: 14px;
+  background: #ffffff;
   padding: 6px;
 
   display: flex;
@@ -106,7 +104,6 @@ body {
   margin-bottom: 14px;
 
   border: 1px solid #e5e7eb;
-
   box-shadow: 0 8px 18px rgba(0,125,255,0.08);
 
   transition: 0.2s;
@@ -138,7 +135,6 @@ body {
   border: 1px solid #e5e7eb;
 
   box-shadow: 0 6px 14px rgba(0,125,255,0.08);
-
   transition: 0.2s;
 }
 
@@ -217,7 +213,6 @@ button:hover {
   text-align: center;
 
   box-shadow: 0 6px 14px rgba(0,125,255,0.08);
-
   transition: 0.2s;
 }
 
@@ -264,28 +259,28 @@ th {
 }
 
 /* ================= MOBILE ================= */
+@media (max-width: 1024px) {
+  .dashboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 📱 TABLET / PHONE */
 @media (max-width: 768px) {
 
-  /* SWIPE DASHBOARD */
   .dashboard {
-    display: flex;
-    overflow-x: auto;
-    gap: 10px;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .dash-card {
-    min-width: 85%;
-    flex: 0 0 85%;
-  }
-
-  /* STACK ALL */
   .form-split,
   .form-grid,
-  .inline-stats {
+  .inline-stats,
+  .filter-grid,
+  .tools,
+  .summary-list {
     grid-template-columns: 1fr;
   }
 
-  /* HEADER */
   .icon-box {
     width: 52px;
     height: 52px;
@@ -300,10 +295,11 @@ th {
   }
 }
 
+/* 📱 SMALL PHONE */
 @media (max-width: 480px) {
 
-  .dash-card {
-    min-width: 90%;
+  .dashboard {
+    grid-template-columns: 1fr;
   }
 
   .brand-text h1 {
