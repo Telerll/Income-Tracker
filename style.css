@@ -1,5 +1,6 @@
 /* =========================
    SAFE UI UPGRADE ADD-ON
+   UPDATED WITH DONUT SPLASH
    Ilagay sa pinakailalim
 ========================= */
 
@@ -229,4 +230,107 @@ body.dark-mode .table-wrap::-webkit-scrollbar-track,
 body.dark-mode #expenseSummary::-webkit-scrollbar-track,
 body.dark-mode .budget-list::-webkit-scrollbar-track {
   background: rgba(255,255,255,0.06);
+}
+
+/* =========================
+   DONUT SPLASH SCREEN
+========================= */
+
+#splash-screen {
+  position: fixed;
+  inset: 0;
+  background: #007dff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+#splash-screen.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.splash-wrap {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.splash-logo {
+  width: 82px;
+  height: 82px;
+  object-fit: contain;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.12);
+  padding: 8px;
+  z-index: 2;
+  position: relative;
+}
+
+.splash-ring {
+  position: absolute;
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  border: 6px solid rgba(255,255,255,0.18);
+  border-top: 6px solid #ffffff;
+  border-right: 6px solid rgba(255,255,255,0.7);
+  animation: donutSpin 1s linear infinite;
+}
+
+.splash-title {
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+@keyframes donutSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body.dark-mode #splash-screen {
+  background: #0b1f3a;
+}
+
+body.dark-mode .splash-logo {
+  background: rgba(255,255,255,0.08);
+}
+
+@media (max-width: 480px) {
+  .splash-wrap {
+    width: 118px;
+    height: 118px;
+  }
+
+  .splash-logo {
+    width: 74px;
+    height: 74px;
+    border-radius: 18px;
+  }
+
+  .splash-ring {
+    width: 106px;
+    height: 106px;
+    border-width: 5px;
+    border-top-width: 5px;
+    border-right-width: 5px;
+  }
+
+  .splash-title {
+    font-size: 24px;
+  }
 }
