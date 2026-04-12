@@ -405,6 +405,7 @@ button:hover {
   color: var(--muted);
   transition: transform 0.2s ease;
 }
+body { border: 8px solid red !important; }
 
 .record-dropdown[open] .summary-arrow {
   transform: rotate(180deg);
