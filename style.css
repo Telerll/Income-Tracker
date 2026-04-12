@@ -1,239 +1,6 @@
 /* =========================
-   SAFE UI UPGRADE ADD-ON
-   UPDATED WITH DONUT SPLASH
-   Ilagay sa pinakailalim
-========================= */
-
-/* smoother overall feel */
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* better custom scrollbars */
-.dashboard::-webkit-scrollbar,
-.table-wrap::-webkit-scrollbar,
-#expenseSummary::-webkit-scrollbar,
-.budget-list::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-.dashboard::-webkit-scrollbar-thumb,
-.table-wrap::-webkit-scrollbar-thumb,
-#expenseSummary::-webkit-scrollbar-thumb,
-.budget-list::-webkit-scrollbar-thumb {
-  background: rgba(0, 125, 255, 0.28);
-  border-radius: 999px;
-}
-
-.dashboard::-webkit-scrollbar-track,
-.table-wrap::-webkit-scrollbar-track,
-#expenseSummary::-webkit-scrollbar-track,
-.budget-list::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.16);
-  border-radius: 999px;
-}
-
-/* glassier header */
-.brand-header {
-  box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.12),
-    0 0 0 1px rgba(255,255,255,0.14) inset;
-}
-
-.brand-header::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 8%;
-  width: 84%;
-  height: 1px;
-  background: rgba(255,255,255,0.75);
-  pointer-events: none;
-}
-
-/* smoother card feel */
-.card,
-.section,
-.dash-card,
-.inline-item,
-.summary-item,
-.budget-item,
-.info-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.card::before,
-.section::before,
-.dash-card::before,
-.inline-item::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.18) 35%,
-    rgba(255,255,255,0) 70%
-  );
-  transform: translateX(-120%);
-  transition: transform 0.8s ease;
-  pointer-events: none;
-}
-
-.card:hover::before,
-.section:hover::before,
-.dash-card:hover::before,
-.inline-item:hover::before {
-  transform: translateX(120%);
-}
-
-/* richer hover */
-.card:hover,
-.section:hover,
-.dash-card:hover,
-.inline-item:hover,
-.summary-item:hover,
-.budget-item:hover {
-  box-shadow:
-    0 14px 28px rgba(0, 0, 0, 0.18),
-    0 0 0 1px rgba(0,125,255,0.06);
-}
-
-/* refined buttons */
-button:active {
-  transform: scale(0.98);
-}
-
-.theme-toggle {
-  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
-}
-
-/* stronger input polish */
-input,
-select,
-textarea {
-  box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset;
-}
-
-input:hover,
-select:hover,
-textarea:hover {
-  border-color: #93c5fd;
-}
-
-/* prettier status line */
-.status-line {
-  padding: 8px 10px;
-  background: rgba(239, 246, 255, 0.9);
-  border: 1px solid #dbeafe;
-  border-radius: 10px;
-}
-
-/* records area nicer */
-.table-wrap {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.55);
-}
-
-tbody tr {
-  transition: background 0.18s ease;
-}
-
-tbody tr:hover {
-  background: rgba(0, 125, 255, 0.04);
-}
-
-/* summary + budget cards better spacing */
-.summary-item,
-.budget-item {
-  line-height: 1.55;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-/* dashboard values pop a bit more */
-.value {
-  letter-spacing: -0.4px;
-}
-
-/* softer mobile swipe appearance */
-@media (max-width: 768px) {
-  .dashboard {
-    padding-bottom: 8px;
-    margin-bottom: 20px;
-  }
-
-  .dash-card {
-    border-radius: 18px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-  }
-
-  .table-wrap {
-    border-radius: 12px;
-  }
-
-  .card,
-  .section {
-    border-radius: 16px;
-  }
-}
-
-/* tighter extra-small phones */
-@media (max-width: 480px) {
-  .brand-header {
-    top: 6px;
-  }
-
-  .theme-toggle {
-    padding: 6px 9px;
-    border-radius: 9px;
-  }
-
-  .card h2,
-  .section h2 {
-    font-size: 18px;
-  }
-
-  .value {
-    font-size: 21px;
-  }
-
-  .inline-item {
-    padding: 12px 10px;
-  }
-}
-
-/* dark mode add-on polish */
-body.dark-mode .brand-header::after {
-  background: rgba(255,255,255,0.12);
-}
-
-body.dark-mode .status-line {
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.10);
-}
-
-body.dark-mode tbody tr:hover {
-  background: rgba(125, 184, 255, 0.08);
-}
-
-body.dark-mode .dashboard::-webkit-scrollbar-thumb,
-body.dark-mode .table-wrap::-webkit-scrollbar-thumb,
-body.dark-mode #expenseSummary::-webkit-scrollbar-thumb,
-body.dark-mode .budget-list::-webkit-scrollbar-thumb {
-  background: rgba(125, 184, 255, 0.32);
-}
-
-body.dark-mode .dashboard::-webkit-scrollbar-track,
-body.dark-mode .table-wrap::-webkit-scrollbar-track,
-body.dark-mode #expenseSummary::-webkit-scrollbar-track,
-body.dark-mode .budget-list::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.06);
-}
-
-/* =========================
    DONUT SPLASH SCREEN
+   Loader muna, logo sunod
 ========================= */
 
 #splash-screen {
@@ -241,7 +8,6 @@ body.dark-mode .budget-list::-webkit-scrollbar-track {
   inset: 0;
   background: #007dff;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 9999;
@@ -254,36 +20,56 @@ body.dark-mode .budget-list::-webkit-scrollbar-track {
   pointer-events: none;
 }
 
-.splash-wrap {
-  position: relative;
-  width: 132px;
-  height: 132px;
+.splash-loader-stage,
+.splash-brand-stage {
+  position: absolute;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 14px;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.splash-loader-stage {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.splash-loader-stage.hide {
+  opacity: 0;
+  transform: scale(0.92);
+  pointer-events: none;
+}
+
+.splash-brand-stage {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.splash-brand-stage.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.splash-ring {
+  width: 106px;
+  height: 106px;
+  border-radius: 50%;
+  border: 6px solid rgba(255,255,255,0.18);
+  border-top: 6px solid #ffffff;
+  border-right: 6px solid rgba(255,255,255,0.72);
+  animation: donutSpin 0.95s linear infinite;
 }
 
 .splash-logo {
-  width: 82px;
-  height: 82px;
+  width: 84px;
+  height: 84px;
   object-fit: contain;
   border-radius: 20px;
   background: rgba(255,255,255,0.12);
   padding: 8px;
-  z-index: 2;
-  position: relative;
-}
-
-.splash-ring {
-  position: absolute;
-  width: 118px;
-  height: 118px;
-  border-radius: 50%;
-  border: 6px solid rgba(255,255,255,0.18);
-  border-top: 6px solid #ffffff;
-  border-right: 6px solid rgba(255,255,255,0.7);
-  animation: donutSpin 1s linear infinite;
+  margin-bottom: 14px;
 }
 
 .splash-title {
@@ -311,23 +97,16 @@ body.dark-mode .splash-logo {
 }
 
 @media (max-width: 480px) {
-  .splash-wrap {
-    width: 118px;
-    height: 118px;
+  .splash-ring {
+    width: 94px;
+    height: 94px;
+    border-width: 5px;
   }
 
   .splash-logo {
-    width: 74px;
-    height: 74px;
+    width: 72px;
+    height: 72px;
     border-radius: 18px;
-  }
-
-  .splash-ring {
-    width: 106px;
-    height: 106px;
-    border-width: 5px;
-    border-top-width: 5px;
-    border-right-width: 5px;
   }
 
   .splash-title {
