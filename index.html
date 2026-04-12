@@ -94,13 +94,13 @@
     }
 
     .splash-ring {
-      width: 106px;
-      height: 106px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
-      border: 6px solid rgba(255,255,255,0.18);
-      border-top: 6px solid #ffffff;
-      border-right: 6px solid rgba(255,255,255,0.72);
-      animation: donutSpin 0.95s linear infinite;
+      border: 4px solid rgba(255,255,255,0.18);
+      border-top: 4px solid #ffffff;
+      border-right: 4px solid rgba(255,255,255,0.72);
+      animation: donutSpin 0.9s linear infinite;
     }
 
     .splash-logo {
@@ -760,7 +760,6 @@
       border-radius: 10px;
     }
 
-    /* better custom scrollbars */
     .dashboard::-webkit-scrollbar,
     .table-wrap::-webkit-scrollbar,
     #expenseSummary::-webkit-scrollbar,
@@ -1034,29 +1033,19 @@
         max-height: 340px;
         border-radius: 12px;
       }
-
-      .card,
-      .section {
-        border-radius: 16px;
-      }
     }
 
     @media (max-width: 480px) {
-      .splash-wrap {
-        width: 118px;
-        height: 118px;
+      .splash-ring {
+        width: 60px;
+        height: 60px;
+        border-width: 3px;
       }
 
       .splash-logo {
-        width: 74px;
-        height: 74px;
+        width: 72px;
+        height: 72px;
         border-radius: 18px;
-      }
-
-      .splash-ring {
-        width: 106px;
-        height: 106px;
-        border-width: 5px;
       }
 
       .splash-title {
@@ -1137,11 +1126,14 @@
 </head>
 <body>
   <div id="splash-screen">
-    <div class="splash-wrap">
-      <img src="logo.png" alt="SUBI PH Logo" class="splash-logo">
+    <div class="splash-loader-stage" id="loaderStage">
       <div class="splash-ring"></div>
     </div>
-    <div class="splash-title">SUBI PH</div>
+
+    <div class="splash-brand-stage" id="brandStage">
+      <img src="logo.png" alt="SUBI PH Logo" class="splash-logo">
+      <div class="splash-title">SUBI PH</div>
+    </div>
   </div>
 
   <div class="container">
@@ -1866,9 +1858,17 @@
 
     window.addEventListener("load", () => {
       const splash = document.getElementById("splash-screen");
+      const loaderStage = document.getElementById("loaderStage");
+      const brandStage = document.getElementById("brandStage");
+
+      setTimeout(() => {
+        loaderStage.classList.add("hide");
+        brandStage.classList.add("show");
+      }, 900);
+
       setTimeout(() => {
         splash.classList.add("hide");
-      }, 1800);
+      }, 2200);
     });
 
     renderBudgetList();
@@ -1876,6 +1876,3 @@
   </script>
 </body>
 </html>
-
-
-Please updated it without sira
