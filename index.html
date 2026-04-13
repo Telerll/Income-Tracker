@@ -1319,12 +1319,19 @@
 
     <div class="form-split">
       <div class="section">
-        <h2 id="salarySectionTitle">Add Salary</h2>
+        <h2 id="salarySectionTitle">Add Income</h2>
         <div class="form-grid">
           <input type="date" id="salaryFrom">
           <input type="date" id="salaryTo">
+
+          <select id="incomeCategory">
+            <option value="Salary">Salary</option>
+            <option value="Other Benefits">Other Benefits</option>
+            <option value="Other Income">Other Income</option>
+          </select>
+
           <input type="number" id="salaryAmount" placeholder="Amount">
-          <button onclick="addSalary()" id="salaryBtn">Add Salary</button>
+          <button onclick="addSalary()" id="salaryBtn">Add Income</button>
         </div>
       </div>
 
@@ -1335,7 +1342,10 @@
 
           <select id="expenseCategory">
             <option value="Foods">Foods</option>
+            <option value="Grocery">Grocery</option>
             <option value="Meds">Meds</option>
+            <option value="Hospitalization">Hospitalization</option>
+            <option value="Insurance">Insurance</option>
             <option value="Transpo">Transpo</option>
             <option value="Family Support">Family Support</option>
             <option value="Wants">Wants</option>
@@ -1365,7 +1375,10 @@
       <div class="budget-grid">
         <select id="budgetCategory">
           <option value="Foods">Foods</option>
+          <option value="Grocery">Grocery</option>
           <option value="Meds">Meds</option>
+          <option value="Hospitalization">Hospitalization</option>
+          <option value="Insurance">Insurance</option>
           <option value="Transpo">Transpo</option>
           <option value="Family Support">Family Support</option>
           <option value="Wants">Wants</option>
@@ -1475,7 +1488,10 @@
 
     const categoryColors = {
       "Foods": "#f59e0b",
+      "Grocery": "#22c55e",
       "Meds": "#ef4444",
+      "Hospitalization": "#b91c1c",
+      "Insurance": "#6366f1",
       "Transpo": "#3b82f6",
       "Family Support": "#8b5cf6",
       "Wants": "#eab308",
@@ -1542,13 +1558,22 @@
       document.getElementById('editStatus').textContent = "No record selected for editing.";
     }
 
+    function resetIncomeForm() {
+      const today = new Date().toISOString().split("T")[0];
+      document.getElementById('salaryFrom').value = today;
+      document.getElementById('salaryTo').value = today;
+      document.getElementById('salaryAmount').value = "";
+      document.getElementById('incomeCategory').value = "Salary";
+    }
+
     function addSalary() {
       const from = document.getElementById('salaryFrom').value;
       const to = document.getElementById('salaryTo').value;
       const amount = parseFloat(document.getElementById('salaryAmount').value);
+      const incomeCategory = document.getElementById('incomeCategory').value;
 
       if (!from || !to || !amount || amount <= 0) {
-        alert("Complete salary fields.");
+        alert("Complete income fields.");
         return;
       }
 
@@ -1556,16 +1581,12 @@
         id: Date.now(),
         date: `${from} to ${to}`,
         type: "Income",
-        category: "Salary",
+        category: incomeCategory,
         amount,
         note: ""
       });
 
-      const today = new Date().toISOString().split("T")[0];
-      document.getElementById('salaryFrom').value = today;
-      document.getElementById('salaryTo').value = today;
-      document.getElementById('salaryAmount').value = "";
-
+      resetIncomeForm();
       saveRecords();
       render();
     }
@@ -1941,6 +1962,7 @@
         saveRecords();
         saveBudgetsToStorage();
         resetExpenseForm();
+        resetIncomeForm();
         render();
       }
     }
