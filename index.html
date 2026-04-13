@@ -129,6 +129,18 @@
       max-width: 1200px;
       margin: auto;
       position: relative;
+      animation: pageFade 0.45s ease;
+    }
+
+    @keyframes pageFade {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .container::before {
@@ -195,6 +207,13 @@
       box-shadow:
         0 16px 30px rgba(0, 0, 0, 0.16),
         0 0 0 1px rgba(255,255,255,0.14) inset;
+    }
+
+    .brand-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .theme-toggle {
@@ -285,6 +304,18 @@
       color: var(--text-dark);
       position: relative;
       overflow: hidden;
+      animation: fadeUpSoft 0.35s ease;
+    }
+
+    @keyframes fadeUpSoft {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .dash-card,
@@ -364,6 +395,7 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 14px;
       margin-bottom: 18px;
+      scroll-behavior: smooth;
     }
 
     .dash-card {
@@ -463,6 +495,14 @@
       border-color: var(--blue);
       box-shadow: 0 0 0 3px rgba(0, 125, 255, 0.14);
       transform: translateY(-1px);
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid rgba(255,255,255,0.28);
+      outline-offset: 2px;
     }
 
     button {
@@ -674,6 +714,7 @@
       gap: 10px;
       max-height: 260px;
       overflow-y: auto;
+      scroll-behavior: smooth;
     }
 
     .summary-item {
@@ -703,6 +744,7 @@
       gap: 10px;
       max-height: 260px;
       overflow-y: auto;
+      scroll-behavior: smooth;
     }
 
     .budget-item {
@@ -916,6 +958,68 @@
     body.dark-mode #expenseSummary::-webkit-scrollbar-track,
     body.dark-mode .budget-list::-webkit-scrollbar-track {
       background: rgba(255,255,255,0.06);
+    }
+
+    /* DESKTOP COMPACT HEADER ONLY */
+    @media (min-width: 769px) {
+      .brand-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+        padding: 12px 16px;
+        border-radius: 20px;
+        min-height: 86px;
+      }
+
+      .brand-header::after {
+        left: 16px;
+        width: calc(100% - 32px);
+      }
+
+      .brand-main {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .icon-box {
+        width: 58px;
+        height: 58px;
+        min-width: 58px;
+        border-radius: 16px;
+        margin-bottom: 0;
+        padding: 5px;
+      }
+
+      .brand-text {
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .brand-text h1 {
+        font-size: 18px;
+        line-height: 1.05;
+      }
+
+      .subline {
+        margin: 3px 0 2px;
+        font-size: 10px;
+        letter-spacing: 2px;
+      }
+
+      .tagline {
+        font-size: 9px;
+        letter-spacing: 1.4px;
+      }
+
+      .theme-toggle {
+        position: static;
+        margin-left: 14px;
+        flex-shrink: 0;
+      }
     }
 
     @media (max-width: 1024px) {
@@ -1139,17 +1243,19 @@
   <div class="container">
 
     <div class="brand-header">
+      <div class="brand-main">
+        <div class="icon-box">
+          <img src="logo.png" alt="SUBI PH Logo" class="brand-logo" />
+        </div>
+
+        <div class="brand-text">
+          <h1>SUBI PH</h1>
+          <p class="subline">CASH FLOW TRACKER</p>
+          <p class="tagline">TRACK • MANAGE • SAVE</p>
+        </div>
+      </div>
+
       <button class="theme-toggle" id="themeToggle">🌙</button>
-
-      <div class="icon-box">
-        <img src="logo.png" alt="SUBI PH Logo" class="brand-logo" />
-      </div>
-
-      <div class="brand-text">
-        <h1>SUBI PH</h1>
-        <p class="subline">CASH FLOW TRACKER</p>
-        <p class="tagline">TRACK • MANAGE • SAVE</p>
-      </div>
     </div>
 
     <div class="card">
@@ -1426,7 +1532,8 @@
     }
 
     function resetExpenseForm() {
-      document.getElementById('expenseDate').value = "";
+      const today = new Date().toISOString().split("T")[0];
+      document.getElementById('expenseDate').value = today;
       document.getElementById('expenseAmount').value = "";
       document.getElementById('expenseNote').value = "";
       document.getElementById('expenseCategory').value = "Foods";
@@ -1454,8 +1561,9 @@
         note: ""
       });
 
-      document.getElementById('salaryFrom').value = "";
-      document.getElementById('salaryTo').value = "";
+      const today = new Date().toISOString().split("T")[0];
+      document.getElementById('salaryFrom').value = today;
+      document.getElementById('salaryTo').value = today;
       document.getElementById('salaryAmount').value = "";
 
       saveRecords();
@@ -1659,7 +1767,7 @@
               position: 'bottom',
               labels: {
                 boxWidth: 14,
-                color: '#334155',
+                color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#334155',
                 padding: 14
               }
             },
@@ -1837,6 +1945,17 @@
       }
     }
 
+    function updateThemeMeta() {
+      const metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (!metaTheme) return;
+
+      if (document.body.classList.contains("dark-mode")) {
+        metaTheme.setAttribute("content", "#0b1f3a");
+      } else {
+        metaTheme.setAttribute("content", "#007dff");
+      }
+    }
+
     const themeToggle = document.getElementById('themeToggle');
 
     if (localStorage.getItem('subi_theme') === 'dark') {
@@ -1854,6 +1973,9 @@
         localStorage.setItem('subi_theme', 'light');
         themeToggle.textContent = '🌙';
       }
+
+      updateThemeMeta();
+      render();
     });
 
     window.addEventListener("load", () => {
@@ -1864,13 +1986,26 @@
       setTimeout(() => {
         loaderStage.classList.add("hide");
         brandStage.classList.add("show");
-      }, 900);
+      }, 800);
 
       setTimeout(() => {
         splash.classList.add("hide");
-      }, 2200);
+      }, 1900);
     });
 
+    (function setDefaultDates() {
+      const today = new Date().toISOString().split("T")[0];
+
+      const salaryFrom = document.getElementById("salaryFrom");
+      const salaryTo = document.getElementById("salaryTo");
+      const expenseDate = document.getElementById("expenseDate");
+
+      if (salaryFrom && !salaryFrom.value) salaryFrom.value = today;
+      if (salaryTo && !salaryTo.value) salaryTo.value = today;
+      if (expenseDate && !expenseDate.value) expenseDate.value = today;
+    })();
+
+    updateThemeMeta();
     renderBudgetList();
     render();
   </script>
