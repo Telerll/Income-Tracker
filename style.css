@@ -1,17 +1,30 @@
 /* =========================
    DONUT SPLASH SCREEN
    Loader muna, logo sunod
+   SAFE UPDATED VERSION
 ========================= */
 
 #splash-screen {
   position: fixed;
   inset: 0;
-  background: #007dff;
+  background: linear-gradient(180deg, #007dff 0%, #006fe3 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
   transition: opacity 0.45s ease, visibility 0.45s ease;
+  overflow: hidden;
+}
+
+#splash-screen::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: rgba(255,255,255,0.10);
+  filter: blur(70px);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 #splash-screen.hide {
@@ -27,7 +40,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
 }
 
 .splash-loader-stage {
@@ -37,46 +52,54 @@
 
 .splash-loader-stage.hide {
   opacity: 0;
-  transform: scale(0.92);
+  transform: scale(0.88);
   pointer-events: none;
 }
 
 .splash-brand-stage {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(12px) scale(0.96);
   pointer-events: none;
 }
 
 .splash-brand-stage.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .splash-ring {
-  width: 106px;
-  height: 106px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  border: 6px solid rgba(255,255,255,0.18);
-  border-top: 6px solid #ffffff;
-  border-right: 6px solid rgba(255,255,255,0.72);
-  animation: donutSpin 0.95s linear infinite;
+  border: 4px solid rgba(255,255,255,0.18);
+  border-top: 4px solid #ffffff;
+  border-right: 4px solid rgba(255,255,255,0.72);
+  animation: donutSpin 0.9s linear infinite;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 0 18px rgba(255,255,255,0.08);
 }
 
 .splash-logo {
-  width: 84px;
-  height: 84px;
+  width: 82px;
+  height: 82px;
   object-fit: contain;
   border-radius: 20px;
-  background: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.14);
   padding: 8px;
   margin-bottom: 14px;
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.16),
+    inset 0 1px 0 rgba(255,255,255,0.18);
 }
 
 .splash-title {
   color: #ffffff;
-  font-size: 28px;
+  font-size: 27px;
   font-weight: 800;
   letter-spacing: 2px;
+  line-height: 1;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.12);
 }
 
 @keyframes donutSpin {
@@ -89,27 +112,44 @@
 }
 
 body.dark-mode #splash-screen {
-  background: #0b1f3a;
+  background: linear-gradient(180deg, #0b1f3a 0%, #10284a 100%);
+}
+
+body.dark-mode #splash-screen::before {
+  background: rgba(125,184,255,0.10);
 }
 
 body.dark-mode .splash-logo {
   background: rgba(255,255,255,0.08);
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.24),
+    inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
+body.dark-mode .splash-ring {
+  border-color: rgba(255,255,255,0.12);
+  border-top-color: #ffffff;
+  border-right-color: rgba(255,255,255,0.58);
+}
+
+/* mobile safe */
 @media (max-width: 480px) {
   .splash-ring {
-    width: 94px;
-    height: 94px;
-    border-width: 5px;
+    width: 60px;
+    height: 60px;
+    border-width: 3px;
   }
 
   .splash-logo {
-    width: 72px;
-    height: 72px;
+    width: 70px;
+    height: 70px;
     border-radius: 18px;
+    padding: 7px;
+    margin-bottom: 12px;
   }
 
   .splash-title {
-    font-size: 24px;
+    font-size: 23px;
+    letter-spacing: 1.5px;
   }
 }
