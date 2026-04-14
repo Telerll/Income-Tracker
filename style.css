@@ -1,7 +1,7 @@
 /* =========================
    DONUT SPLASH SCREEN
    Loader muna, logo sunod
-   SAFE CORRECTED VERSION
+   IOS-STYLE SAFE VERSION
 ========================= */
 
 #splash-screen {
@@ -67,19 +67,22 @@
   transform: translateY(0) scale(1);
 }
 
-/* FIXED DONUT */
+/* IOS-STYLE DONUT */
 .splash-ring {
   width: 70px;
   height: 70px;
   border-radius: 50%;
   box-sizing: border-box;
-  border: 9px solid rgba(255,255,255,0.18);
-  border-top: 9px solid #ffffff;
-  border-right: 9px solid rgba(255,255,255,0.72);
-  animation: donutSpin 1.05s linear infinite;
+  border: 8px solid rgba(255,255,255,0.14);
+  border-top: 8px solid rgba(255,255,255,0.98);
+  border-right: 8px solid rgba(255,255,255,0.78);
+  border-bottom: 8px solid rgba(255,255,255,0.22);
+  border-left: 8px solid rgba(255,255,255,0.10);
+  animation: donutSpin 1s linear infinite;
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.04),
-    0 0 18px rgba(255,255,255,0.08);
+    0 0 20px rgba(255,255,255,0.08),
+    inset 0 0 8px rgba(255,255,255,0.05);
 }
 
 .splash-logo {
@@ -91,7 +94,8 @@
   padding: 8px;
   margin-bottom: 14px;
   box-shadow:
-    0 10px 26px rgba(0,0,0,0.16),
+    0 10px 24px rgba(0,0,0,0.14),
+    0 0 18px rgba(255,255,255,0.10),
     inset 0 1px 0 rgba(255,255,255,0.18);
 }
 
@@ -124,22 +128,25 @@ body.dark-mode #splash-screen::before {
 body.dark-mode .splash-logo {
   background: rgba(255,255,255,0.08);
   box-shadow:
-    0 10px 26px rgba(0,0,0,0.24),
+    0 10px 24px rgba(0,0,0,0.22),
+    0 0 18px rgba(255,255,255,0.06),
     inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 body.dark-mode .splash-ring {
-  border-color: rgba(255,255,255,0.14);
-  border-top-color: #ffffff;
-  border-right-color: rgba(255,255,255,0.62);
+  border-color: rgba(255,255,255,0.12);
+  border-top-color: rgba(255,255,255,0.98);
+  border-right-color: rgba(255,255,255,0.72);
+  border-bottom-color: rgba(255,255,255,0.18);
+  border-left-color: rgba(255,255,255,0.08);
 }
 
 /* mobile safe */
 @media (max-width: 480px) {
   .splash-ring {
-    width: 60px;
-    height: 60px;
-    border-width: 8px;
+    width: 58px;
+    height: 58px;
+    border-width: 7px;
     box-sizing: border-box;
   }
 
