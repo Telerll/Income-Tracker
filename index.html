@@ -47,6 +47,8 @@
     #splash-screen {
       position: fixed;
       inset: 0;
+      width: 100vw;
+      height: 100dvh;
       background: #007dff;
       display: flex;
       align-items: center;
@@ -76,33 +78,37 @@
     .splash-loader-stage,
     .splash-brand-stage {
       position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       transition: opacity 0.35s ease, transform 0.35s ease;
+      will-change: transform, opacity;
     }
 
     .splash-loader-stage {
       opacity: 1;
-      transform: scale(1);
+      transform: translate(-50%, -50%) scale(1);
     }
 
     .splash-loader-stage.hide {
       opacity: 0;
-      transform: scale(0.92);
+      transform: translate(-50%, -50%) scale(0.92);
       pointer-events: none;
     }
 
     .splash-brand-stage {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translate(-50%, -50%) translateY(10px);
       pointer-events: none;
     }
 
     .splash-brand-stage.show {
       opacity: 1;
-      transform: translateY(0);
+      transform: translate(-50%, -50%) translateY(0);
     }
 
     .splash-ring {
@@ -858,6 +864,8 @@
 
     body.dark-mode #splash-screen {
       background: #0b1f3a;
+      width: 100vw;
+      height: 100dvh;
     }
 
     body.dark-mode #splash-screen::before {
@@ -1181,6 +1189,16 @@
     }
 
     @media (max-width: 480px) {
+      #splash-screen {
+        width: 100vw;
+        height: 100dvh;
+      }
+
+      .splash-loader-stage,
+      .splash-brand-stage {
+        width: 100%;
+      }
+
       .splash-ring {
         width: 58px;
         height: 58px;
