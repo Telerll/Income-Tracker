@@ -153,3 +153,45 @@ body.dark-mode .splash-ring {
     letter-spacing: 1.5px;
   }
 }
+
+/* =========================
+   DONUT FIX ADD-ON
+   Add only, no existing removal
+========================= */
+.splash-ring {
+  background: conic-gradient(
+    from 0deg,
+    #ffffff 0deg,
+    rgba(255,255,255,0.95) 70deg,
+    rgba(255,255,255,0.55) 160deg,
+    rgba(255,255,255,0.16) 260deg,
+    rgba(255,255,255,0.06) 360deg
+  ) !important;
+  border: none !important;
+  -webkit-mask: radial-gradient(farthest-side, transparent 28%, #000 29%);
+  mask: radial-gradient(farthest-side, transparent 28%, #000 29%);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.05),
+    0 0 18px rgba(255,255,255,0.10);
+  animation: donutSpin 0.9s linear infinite;
+}
+
+body.dark-mode .splash-ring {
+  background: conic-gradient(
+    from 0deg,
+    #ffffff 0deg,
+    rgba(255,255,255,0.95) 70deg,
+    rgba(255,255,255,0.55) 160deg,
+    rgba(255,255,255,0.16) 260deg,
+    rgba(255,255,255,0.06) 360deg
+  ) !important;
+  border: none !important;
+}
+
+@media (max-width: 480px) {
+  .splash-ring {
+    width: 60px;
+    height: 60px;
+    border: none !important;
+  }
+}
