@@ -1,7 +1,7 @@
 /* =========================
    DONUT SPLASH SCREEN
    Loader muna, logo sunod
-   SAFE UPDATED VERSION
+   SAFE CORRECTED VERSION
 ========================= */
 
 #splash-screen {
@@ -67,14 +67,16 @@
   transform: translateY(0) scale(1);
 }
 
+/* FIXED DONUT */
 .splash-ring {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  border: 4px solid rgba(255,255,255,0.18);
-  border-top: 4px solid #ffffff;
-  border-right: 4px solid rgba(255,255,255,0.72);
-  animation: donutSpin 0.9s linear infinite;
+  box-sizing: border-box;
+  border: 9px solid rgba(255,255,255,0.18);
+  border-top: 9px solid #ffffff;
+  border-right: 9px solid rgba(255,255,255,0.72);
+  animation: donutSpin 1.05s linear infinite;
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.04),
     0 0 18px rgba(255,255,255,0.08);
@@ -127,9 +129,9 @@ body.dark-mode .splash-logo {
 }
 
 body.dark-mode .splash-ring {
-  border-color: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.14);
   border-top-color: #ffffff;
-  border-right-color: rgba(255,255,255,0.58);
+  border-right-color: rgba(255,255,255,0.62);
 }
 
 /* mobile safe */
@@ -137,7 +139,8 @@ body.dark-mode .splash-ring {
   .splash-ring {
     width: 60px;
     height: 60px;
-    border-width: 3px;
+    border-width: 8px;
+    box-sizing: border-box;
   }
 
   .splash-logo {
@@ -151,47 +154,5 @@ body.dark-mode .splash-ring {
   .splash-title {
     font-size: 23px;
     letter-spacing: 1.5px;
-  }
-}
-
-/* =========================
-   DONUT FIX ADD-ON
-   Add only, no existing removal
-========================= */
-.splash-ring {
-  background: conic-gradient(
-    from 0deg,
-    #ffffff 0deg,
-    rgba(255,255,255,0.95) 70deg,
-    rgba(255,255,255,0.55) 160deg,
-    rgba(255,255,255,0.16) 260deg,
-    rgba(255,255,255,0.06) 360deg
-  ) !important;
-  border: none !important;
-  -webkit-mask: radial-gradient(farthest-side, transparent 28%, #000 29%);
-  mask: radial-gradient(farthest-side, transparent 28%, #000 29%);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.05),
-    0 0 18px rgba(255,255,255,0.10);
-  animation: donutSpin 0.9s linear infinite;
-}
-
-body.dark-mode .splash-ring {
-  background: conic-gradient(
-    from 0deg,
-    #ffffff 0deg,
-    rgba(255,255,255,0.95) 70deg,
-    rgba(255,255,255,0.55) 160deg,
-    rgba(255,255,255,0.16) 260deg,
-    rgba(255,255,255,0.06) 360deg
-  ) !important;
-  border: none !important;
-}
-
-@media (max-width: 480px) {
-  .splash-ring {
-    width: 60px;
-    height: 60px;
-    border: none !important;
   }
 }
