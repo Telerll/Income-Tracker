@@ -7,6 +7,8 @@
 #splash-screen {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  height: 100dvh;
   background: linear-gradient(180deg, #007dff 0%, #006fe3 100%);
   display: flex;
   align-items: center;
@@ -36,6 +38,9 @@
 .splash-loader-stage,
 .splash-brand-stage {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,28 +48,29 @@
   transition:
     opacity 0.4s ease,
     transform 0.4s ease;
+  will-change: transform, opacity;
 }
 
 .splash-loader-stage {
   opacity: 1;
-  transform: scale(1);
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .splash-loader-stage.hide {
   opacity: 0;
-  transform: scale(0.88);
+  transform: translate(-50%, -50%) scale(0.88);
   pointer-events: none;
 }
 
 .splash-brand-stage {
   opacity: 0;
-  transform: translateY(12px) scale(0.96);
+  transform: translate(-50%, -50%) translateY(12px) scale(0.96);
   pointer-events: none;
 }
 
 .splash-brand-stage.show {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translate(-50%, -50%) translateY(0) scale(1);
 }
 
 /* IOS-STYLE DONUT */
@@ -143,6 +149,16 @@ body.dark-mode .splash-ring {
 
 /* mobile safe */
 @media (max-width: 480px) {
+  #splash-screen {
+    width: 100vw;
+    height: 100dvh;
+  }
+
+  .splash-loader-stage,
+  .splash-brand-stage {
+    width: 100%;
+  }
+
   .splash-ring {
     width: 58px;
     height: 58px;
